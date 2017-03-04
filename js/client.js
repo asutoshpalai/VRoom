@@ -28,9 +28,10 @@ webrtc.on('videoAdded', function(videoEl, peer) {
   var video = document.getElementById('penguin-sledding');
   video.src = window.URL.createObjectURL(peer.stream);
   video.play();
-
+  StartAudioTransSession(peer.stream, handleSubs);
   videoEl.display = null;
 });
+
 
 webrtc.on('createdPeer', function(peer){
   var pnick = peer.parent.config.nick;
@@ -41,4 +42,7 @@ webrtc.on('createdPeer', function(peer){
   console.log(pnick + " joined the class");
 });
 
+function handleSubs(recognition, translation) {
+  console.log(arguments);
+}
 })();
