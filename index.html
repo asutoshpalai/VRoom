@@ -4,6 +4,7 @@
     <title>A-Frame Passthrough Component - Basic</title>
 	  <script src="https://aframe.io/releases/0.3.0/aframe.min.js"></script>
 	  <script src="https://rawgit.com/flysonic10/aframe-passthrough/master/dist/aframe-passthrough-component.min.js"></script>
+    <script src="https://simplewebrtc.com/latest-v2.js"></script> 
   </head>
   <body>
 
@@ -11,14 +12,53 @@
 
 <a-scene>
   <a-assets>
-    <video id="penguin-sledding" autoplay loop="true" src="a.mp4"></video>
+    <video id="penguin-sledding" autoplay src="#"></video>
   </a-assets>
   <!-- Using the asset management system. -->
   <a-video src="#penguin-sledding" width="16" height="9" position="0 0 -20"></a-video>
   <!-- Defining the URL inline. Not recommended but more comfortable for web developers. -->
-  <a-video src="a.mp4"></a-video>
+  <a-video id="vid2" src="#"></a-video>
 </a-scene>
 
+  <script>
+var webrtc = new SimpleWebRTC({
+  // the id/element dom element that will hold "our" video
+  localVideoEl: 'localVideo',
+  // the id/element dom element that will hold remote videos
+  //remoteVideosEl: 'remotesVideos',
+  // immediately ask for camera access
+  autoRequestMedia: true,
+  localVideo: false,
+  media: { video: false, audio: false  },
+  url: 'https://192.168.0.103:8888'
+
+});
+// we have to wait until it's ready
+webrtc.on('readyToCall', function () {
+    // you can name it anything
+    webrtc.joinRoom('arpitsing');
+
+});
+webrtc.on('createdPeer', function(peer){
+  console.log(peer);
+});
+
+webrtc.on('videoAdded', function(videoEl, peer) {
+  var video = document.getElementById('penguin-sledding');
+  video.src = window.URL.createObjectURL(peer.stream);
+  video.play();
+
+  var video2 = document.getElementById('vid2');
+  video2.src = window.URL.createObjectURL(peer.stream);
+  video2.play();
+
+  videoEl.display = null;
+});
+
+webrtc.on('createdPeer', function(peer){
+  console.log(peer);
+});
+  </script>
 
   </body>
 </html>
