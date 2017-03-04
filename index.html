@@ -79,11 +79,12 @@ webrtc.on('videoAdded', function(videoEl, peer) {
 });
 
 webrtc.on('createdPeer', function(peer){
-  if(peer.nick === 'streamer') {
+  var pnick = peer.parent.config.nick;
+  if(pnick === 'streamer') {
     // Broadcaster
     return;
   }
-  console.log(peer.nick + " joined the class");
+  console.log(pnick + " joined the class");
 });
   </script>
 
