@@ -11,6 +11,7 @@
  
 
 <a-scene>
+  <a-sky src="a.jpg" rotation="0 -90 0"></a-sky>
   <a-assets>
     <video id="penguin-sledding" autoplay src="#"></video>
   </a-assets>
@@ -30,7 +31,7 @@ var webrtc = new SimpleWebRTC({
   autoRequestMedia: true,
   localVideo: false,
   media: { video: false, audio: false  },
-  url: 'https://192.168.0.103:8888'
+  url: 'https://192.168.0.138:8888'
 
 });
 // we have to wait until it's ready

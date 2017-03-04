@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://simplewebrtc.com/latest-v2.js"></script> 
+  </head>
+  <body>
+    <video height="300" id="localVideo"></video>
+    <div id="remotesVideos"></div>
+  </body>
+  <script>
+var webrtc = new SimpleWebRTC({
+  // the id/element dom element that will hold "our" video
+  localVideoEl: 'localVideo',
+  // the id/element dom element that will hold remote videos
+  remoteVideosEl: 'remotesVideos',
+  receiveMedia: false,
+  // immediately ask for camera access
+  autoRequestMedia: true,
+  url: 'https://192.168.0.138:8888'
+
+});
+// we have to wait until it's ready
+webrtc.on('readyToCall', function () {
+    // you can name it anything
+    webrtc.joinRoom('arpitsing');
+
+});
+  </script>
+</html>
