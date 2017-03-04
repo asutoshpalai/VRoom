@@ -42,10 +42,13 @@
   <!-- Using the asset management system. -->
   <a-video src="#penguin-sledding" width="16" height="9" position="0 5 -25"></a-video>
   <!-- Defining the URL inline. Not recommended but more comfortable for web developers. -->
-  <a-video id="vid2" src="#"></a-video>
 </a-scene>
 
   <script>
+
+var nicks = ["Bonnie Rowsey", "Sima Landwehr", "Agnes Stringfellow", "Silva Reta", "Josette Dyal", "Adan Thweatt", "Edwardo Vivanco", "Wava Hinds", "Cyndi Divine", "Jadwiga Saur", "Renato Whidbee", "Kathi Pitt", "Mabelle Sutcliffe", "Vernell Domingue", "Refugia Latham", "Larisa Depaz", "Myrtle Reinhold", "Miki Griffiths", "Hayley Keebler", "Lakeisha Huffines"];
+var nick = nicks[Math.floor(Math.random()*nicks.length)];
+
 var webrtc = new SimpleWebRTC({
   // the id/element dom element that will hold "our" video
   localVideoEl: 'localVideo',
@@ -54,6 +57,7 @@ var webrtc = new SimpleWebRTC({
   // immediately ask for camera access
   autoRequestMedia: true,
   localVideo: false,
+  nick: nick,
   media: { video: false, audio: false  }
   //,
   //url: 'https://192.168.0.138:8888'
@@ -65,24 +69,21 @@ webrtc.on('readyToCall', function () {
     webrtc.joinRoom('arpitsing');
 
 });
-webrtc.on('createdPeer', function(peer){
-  console.log(peer);
-});
 
 webrtc.on('videoAdded', function(videoEl, peer) {
   var video = document.getElementById('penguin-sledding');
   video.src = window.URL.createObjectURL(peer.stream);
   video.play();
 
-  var video2 = document.getElementById('vid2');
-  video2.src = window.URL.createObjectURL(peer.stream);
-  video2.play();
-
   videoEl.display = null;
 });
 
 webrtc.on('createdPeer', function(peer){
-  console.log(peer);
+  if(peer.nick === 'streamer') {
+    // Broadcaster
+    return;
+  }
+  console.log(peer.nick + " joined the class");
 });
   </script>
 
