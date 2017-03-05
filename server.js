@@ -30,6 +30,7 @@ var handleRequest = function(request, response) {
   } else if(request.url == '/token') {
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.end(accToken);
+    getAdmToken();
   } else if(request.url == '/server') {
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.end(fs.readFileSync('server.html'));
@@ -99,5 +100,7 @@ function getAdmToken() {
   //post_req.write(post_data);
   post_req.end();
 }
- getAdmToken();
+
+getAdmToken();
+
 console.log('Server running. Visit https://localhost:' + HTTPS_PORT + ' in Firefox/Chrome (note the HTTPS; there is no HTTP -> HTTPS redirect!)');

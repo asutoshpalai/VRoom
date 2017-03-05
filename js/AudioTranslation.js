@@ -184,7 +184,7 @@ function SetupWebConnection(resultsCB, accToken) {
   mediaRecorder.ondataavailable = function (blob) {
     if (stream && ws && ws.readyState === ws.CLOSED) {
       ws = null;
-      SetupWebConnection(resultsCB, accToken);
+      window.StartAudioTransSession(stream, resultsCB);
       return;
     }
 
