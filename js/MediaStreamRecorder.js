@@ -798,7 +798,7 @@ function StereoAudioRecorderHelper(mediaStream, root) {
     Lower values for buffer size will result in a lower (better) latency.
     Higher values will be necessary to avoid audio breakup and glitches 
     Legal values are 256, 512, 1024, 2048, 4096, 8192, and 16384.*/
-    var bufferSize = root.bufferSize || 512;
+    var bufferSize = root.bufferSize || 2048;
     if (root.bufferSize === 0) {
         bufferSize = 0;
     }

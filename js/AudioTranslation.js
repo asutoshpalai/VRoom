@@ -182,8 +182,15 @@ function SetupWebConnection(resultsCB, accToken) {
   }
 
   mediaRecorder.ondataavailable = function (blob) {
-    if (ws)
+    if (stream && ws && ws.readyState === ws.CLOSED) {
+      ws = null;
+      SetupWebConnection(resultsCB, accToken);
+      return;
+    }
+
+    if (ws && ws.readyState === ws.OPEN) {
       ws.send(blob);
+    }
   };
 }
 

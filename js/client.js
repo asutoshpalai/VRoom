@@ -42,10 +42,54 @@ webrtc.on('createdPeer', function(peer){
   console.log(pnick + " joined the class");
 });
 
+var full_speech = [];
+var key_phrases = [];
+
 function handleSubs(recognition, translation) {
   document.getElementById("subs").setAttribute("text", "color: white; align: center; value: "+recognition);
   document.getElementById("subsInHindi").setAttribute("text", "color: white; align: center; value: "+(decodeURIComponent(translation)));
 
   console.log(arguments);
+  full_speech.push(recognition);
+  extractKeyPhrases(recognition);
 }
+
+function extractKeyPhrases(string) {
+
+  var body = {
+    documents: [
+      {
+        id: "1",
+        text: full_speech.join(' ')
+      }
+    ]
+  };
+  var data = JSON.stringify(body);
+
+  $.ajax({
+    url: "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases",
+    beforeSend: function(xhrObj){
+      // Request headers
+      xhrObj.setRequestHeader("Content-Type","application/json");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","14a8f033e94c4819b1d79e67b4a448d7");
+    },
+    type: "POST",
+    // Request body
+   data: data
+  })
+  .done(function(data) {
+    console.log("TAgs:");
+    console.log(data.documents[0].keyPhrases);
+    key_phrases = key_phrases.concat(data.documents[0].keyPhrases.filter(function (x) {
+      return key_phrases.indexOf(x) === -1;
+    }));
+    console.log(key_phrases);
+  })
+  .fail(function() {
+    alert("error");
+
+  });
+
+};
+
 })();
