@@ -2,7 +2,7 @@
  <html>
   <head>
     <title>A-Frame Passthrough Component - Basic</title>
-	  <script src="https://aframe.io/releases/0.3.0/aframe.min.js"></script>
+	  <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
 	  <script src="https://rawgit.com/flysonic10/aframe-passthrough/master/dist/aframe-passthrough-component.min.js"></script>
     <script src="https://simplewebrtc.com/latest-v2.js"></script> 
   </head>
@@ -11,6 +11,17 @@
  
 
 <a-scene>
+
+      <a-entity position="-2 2.5 -3"
+                text="width: 3; color: white; value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam">
+      </a-entity>
+
+
+      <a-entity position="3 2.5 -3"
+                text="width: 3; color: white; value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam">
+      </a-entity>
+
+
   <a-sky color="#AAB"></a-sky>
   <a-assets>
     <img id="highlight1" src="radial-highlight.png">
@@ -22,7 +33,6 @@
   </a-assets>
 
   <a-entity position="-2 0 -3" rotation = "0 180 0"  scale = ".05 .05 .05" obj-model="obj: #chair-test-obj; mtl: #chair-test-mtl"></a-entity>
-
 
   <a-entity position="2 0 -3" rotation = "0 180 0"  scale = ".05 .05 .05" obj-model="obj: #chair-test-obj; mtl: #chair-test-mtl"></a-entity>
 
