@@ -11,12 +11,36 @@
  
 
 <a-scene>
-  <a-sky src="a.jpg" rotation="0 -90 0"></a-sky>
+  <a-sky color="#AAB"></a-sky>
+  <a-assets>
+    <img id="highlight1" src="radial-highlight.png">
+    <img id="shadow3" src="radial-shadow-3.png">
+  </a-assets>
+
+  <a-asset-item id="chair-test-obj" src="chair-test.obj"></a-asset-item>
+    <a-asset-item id="chair-test-mtl" src="chair-test.mtl"></a-asset-item>
+  </a-assets>
+
+  <a-entity position="-2 0 -3" rotation = "0 180 0"  scale = ".05 .05 .05" obj-model="obj: #chair-test-obj; mtl: #chair-test-mtl"></a-entity>
+
+
+  <a-entity position="2 0 -3" rotation = "0 180 0"  scale = ".05 .05 .05" obj-model="obj: #chair-test-obj; mtl: #chair-test-mtl"></a-entity>
+
+
+  <a-entity position="0 0 0" rotation = "0 180 0"  scale = ".05 .05 .05" obj-model="obj: #chair-test-obj; mtl: #chair-test-mtl"></a-entity>
+
+  <a-entity position="0 0 -10">
+    <a-image position="0 -.2 5" src="#highlight1" rotation="-90 0 0"
+             scale="30 30 30">
+     </a-image>
+  </a-entity>
+
+ 
   <a-assets>
     <video id="penguin-sledding" autoplay src="#"></video>
   </a-assets>
   <!-- Using the asset management system. -->
-  <a-video src="#penguin-sledding" width="16" height="9" position="0 0 -20"></a-video>
+  <a-video src="#penguin-sledding" width="16" height="9" position="0 5 -25"></a-video>
   <!-- Defining the URL inline. Not recommended but more comfortable for web developers. -->
   <a-video id="vid2" src="#"></a-video>
 </a-scene>
@@ -30,8 +54,9 @@ var webrtc = new SimpleWebRTC({
   // immediately ask for camera access
   autoRequestMedia: true,
   localVideo: false,
-  media: { video: false, audio: false  },
-  url: 'https://192.168.0.138:8888'
+  media: { video: false, audio: false  }
+  //,
+  //url: 'https://192.168.0.138:8888'
 
 });
 // we have to wait until it's ready
