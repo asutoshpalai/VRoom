@@ -4,6 +4,7 @@
 	  <script src="js/vendor/aframe.min.js"></script>
 	  <script src="js/vendor/aframe-passthrough-component.min.js"></script>
     <script src="js/vendor/simplewebrtc.js"></script> 
+  <meta charset=“utf-8”>
   </head>
   <body>
 
@@ -12,23 +13,27 @@
 <a-scene>
 
       <a-entity position="-2 2.5 -3"
-                text="width: 3; color: white; value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam">
+                text="width: 3; color: white; value: John">
       </a-entity>
-
 
       <a-entity position="3 2.5 -3"
-                text="width: 3; color: white; value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam">
+                text="width: 3; color: white; value: John">
+      </a-entity>
+
+      <a-entity id = "subs" position="0 6 -10"
+                geometry="primitive: plane; width: auto; height: auto" material="color: black"
+                  text="color: white; align: center; value: VREDU; width: 12; ">
       </a-entity>
 
 
-  <!--<a-sky color="#AAB"></a-sky>-->
-  	<a-assets>
-        <video id="video" src="video.mp4"
-               autoplay loop crossorigin></video>
-    </a-assets>
+      <a-entity id = "subsInHindi" position="0 5 -10"
+                geometry="primitive: plane; width: auto; height: auto" material="color: black"
+                  text="color: white; align: center; value: VREDU; width: 12; ">
+      </a-entity>
 
-    <a-videosphere src="#video" rotation="0 180 0"></a-videosphere>
 
+  <a-sky color="#000"></a-sky>
+  	
   <a-assets>
     <img id="highlight1" src="radial-highlight.png">
     <img id="shadow3" src="radial-shadow-3.png">

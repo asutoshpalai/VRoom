@@ -43,6 +43,9 @@ webrtc.on('createdPeer', function(peer){
 });
 
 function handleSubs(recognition, translation) {
+  document.getElementById("subs").setAttribute("text", "color: white; align: center; value: "+recognition);
+  document.getElementById("subsInHindi").setAttribute("text", "color: white; align: center; value: "+(decodeURIComponent(translation)));
+
   console.log(arguments);
 }
 })();

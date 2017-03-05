@@ -11,7 +11,8 @@ var serverConfig = {
   cert: fs.readFileSync('cert.pem'),
 };
 
-var accToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZSI6Imh0dHBzOi8vZGV2Lm1pY3Jvc29mdHRyYW5zbGF0b3IuY29tLyIsInN1YnNjcmlwdGlvbi1pZCI6IjY2MDg2YmU2Y2UyYTQ2Y2U5MjllNDZmN2I3YWI3ZWIyIiwicHJvZHVjdC1pZCI6IlNwZWVjaFRyYW5zbGF0b3IuUzEiLCJjb2duaXRpdmUtc2VydmljZXMtZW5kcG9pbnQiOiJodHRwczovL2FwaS5jb2duaXRpdmUubWljcm9zb2Z0LmNvbS9pbnRlcm5hbC92MS4wLyIsImF6dXJlLXJlc291cmNlLWlkIjoiL3N1YnNjcmlwdGlvbnMvOGEzMGYxZjEtNWYyNC00ZGViLWFiYTgtMWVmMmM2ZTYwMzIxL3Jlc291cmNlR3JvdXBzL3Jlc291cmNlLWdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvYWNjb3VudHMvc2lsZW50LWFzc2Fzc2lucyIsImlzcyI6InVybjptcy5jb2duaXRpdmVzZXJ2aWNlcyIsImF1ZCI6InVybjptcy5taWNyb3NvZnR0cmFuc2xhdG9yIiwiZXhwIjoxNDg4NjUzMzMyfQ.haTbLLENib4pTKF7tDfXLzRF-YFrWudUZtOSbwsTwWw';
+ var accToken = null;
+//var accToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZSI6Imh0dHBzOi8vZGV2Lm1pY3Jvc29mdHRyYW5zbGF0b3IuY29tLyIsInN1YnNjcmlwdGlvbi1pZCI6IjY2MDg2YmU2Y2UyYTQ2Y2U5MjllNDZmN2I3YWI3ZWIyIiwicHJvZHVjdC1pZCI6IlNwZWVjaFRyYW5zbGF0b3IuUzEiLCJjb2duaXRpdmUtc2VydmljZXMtZW5kcG9pbnQiOiJodHRwczovL2FwaS5jb2duaXRpdmUubWljcm9zb2Z0LmNvbS9pbnRlcm5hbC92MS4wLyIsImF6dXJlLXJlc291cmNlLWlkIjoiL3N1YnNjcmlwdGlvbnMvOGEzMGYxZjEtNWYyNC00ZGViLWFiYTgtMWVmMmM2ZTYwMzIxL3Jlc291cmNlR3JvdXBzL3Jlc291cmNlLWdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvYWNjb3VudHMvc2lsZW50LWFzc2Fzc2lucyIsImlzcyI6InVybjptcy5jb2duaXRpdmVzZXJ2aWNlcyIsImF1ZCI6InVybjptcy5taWNyb3NvZnR0cmFuc2xhdG9yIiwiZXhwIjoxNDg4NjY3MTM1fQ.jk3hsgtVcJsUrU4tq76x1RkVWkQ6N7trA5W01vUYlEk';
 
 // ----------------------------------------------------------------------------------------
 
@@ -75,7 +76,7 @@ function getAdmToken() {
   // https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key=96d9a06df6fd467392d5ff575fb831c6
   var post_options = {
     host: 'api.cognitive.microsoft.com',
-    path: '/sts/v1.0/issueToken?Subscription-Key=96d9a06df6fd467392d5ff575fb831c6',
+    path: '/sts/v1.0/issueToken?Subscription-Key=0d12ee2cb2824ec09626b927fe001e20',
     method: 'POST',
     //headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': Buffer.byteLength(post_data) }
   };
@@ -98,5 +99,5 @@ function getAdmToken() {
   //post_req.write(post_data);
   post_req.end();
 }
-
+ getAdmToken();
 console.log('Server running. Visit https://localhost:' + HTTPS_PORT + ' in Firefox/Chrome (note the HTTPS; there is no HTTP -> HTTPS redirect!)');

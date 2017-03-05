@@ -63,6 +63,7 @@ function ConnectWithTranslatorServer(lang1, lang2, accToken) {
     }
 
     ws.onerror = function (event) {
+      console.log(event)
       alert('exDescription: Code: ' + event.code + ' Reason: ' + event.reason);
       displayError(5);
     }
