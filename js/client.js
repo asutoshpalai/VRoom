@@ -39,6 +39,7 @@ webrtc.on('createdPeer', function(peer){
     // Broadcaster
     return;
   }
+  addPerson();
   console.log(pnick + " joined the class");
 });
 
@@ -47,8 +48,16 @@ var key_phrases = [];
 
 function handleSubs(recognition, translation) {
   document.getElementById("subs").setAttribute("text", "color: white; align: center; value: "+recognition);
-  document.getElementById("subsInHindi").setAttribute("text", "color: white; align: center; value: "+(decodeURIComponent(translation)));
-
+  var canvas = document.getElementById("helloWorldCanvas");
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+  ctx.rect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "black";
+  ctx.fill(); 
+  ctx.font = "30px Arial";
+  ctx.fillStyle = 'white';
+  ctx.fillText(translation,10,50);
   console.log(arguments);
   full_speech.push(recognition);
   extractKeyPhrases(recognition);
@@ -93,3 +102,28 @@ function extractKeyPhrases(string) {
 };
 
 })();
+
+
+function addPerson() {
+  if(TOTAL==0) {
+    $("#topbar").append("<a-entity position=\"-2 0 -3\" rotation = \"0 180 0\"  scale = \".05 .05 .05\" obj-model=\"obj: #chair-test-obj; mtl: #chair-test-mtl\"> </a-entity>");
+    $("#topbar").append("<a-entity position=\"-2 1.4 -4\" rotation = \"0 90 20\"  scale = \".05 .05 .05\" obj-model=\"obj: #man-obj; mtl: #man-mtl\"></a-entity>");
+    $("#topbar").append(" <a-entity position=\"-2 2.5 -3\" text=\"width: 3; color: white; value: John\"></a-entity>");
+  }
+  if(TOTAL==1) {
+    $("#topbar").append("<a-entity position=\"2 0 -3\" rotation = \"0 180 0\"  scale = \".05 .05 .05\" obj-model=\"obj: #chair-test-obj; mtl: #chair-test-mtl\"> </a-entity>");
+    $("#topbar").append("<a-entity position=\"2 1.4 -4\" rotation = \"0 90 20\"  scale = \".05 .05 .05\" obj-model=\"obj: #man-obj; mtl: #man-mtl\"></a-entity>");
+    $("#topbar").append(" <a-entity position=\"3 2.5 -3\" text=\"width: 3; color: white; value: John\"></a-entity>");    
+  }
+  TOTAL++;
+}
+var TOTAL = -1;
+
+
+var canvas = document.getElementById("helloWorldCanvas");
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+  ctx.rect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "black";
+  ctx.fill();
