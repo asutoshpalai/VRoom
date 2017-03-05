@@ -21,9 +21,15 @@
                 text="width: 3; color: white; value: John">
       </a-entity>
 -->
-      <a-entity id = "subs" position="0 6 -10"
+      <a-entity id = "subs" position="0 2 -10"
                 geometry="primitive: plane; width: auto; height: auto" material="color: black"
-                  text="color: white; align: center; value: VREDU; width: 12; ">
+                  text="color: white; align: center; value: VR Classroom; width: 12; ">
+      </a-entity>
+
+
+      <a-entity id = "tags" position="8 6 -10" rotation = "0 -20 0"
+                geometry="primitive: plane; width: auto; height: auto" material="color: black"
+                  text="color: white; align: center; value: Tags; width: 7; ">
       </a-entity>
 
 <!--
@@ -32,8 +38,8 @@
                   text="color: white; align: center; value: VREDU; width: 12; ">
       </a-entity>
 -->
-
-  <a-sky color="#000"></a-sky>
+  
+  <a-sky id = "sky" color="#000"></a-sky>
   	
   <a-assets>
     <img id="highlight1" src="radial-highlight.png">
@@ -69,7 +75,7 @@
   </a-assets>
   <a-entity material="shader: flat; src: #helloWorldCanvas"
                 geometry="primitive: plane; width: 9; height: 3"
-                position="0 13 -20" rotation="0 0 0">
+                position="0 0 -20" rotation="0 0 0">
   </a-entity>
 
 
@@ -77,9 +83,28 @@
     <video id="penguin-sledding" autoplay src="#"></video>
   </a-assets>
   <!-- Using the asset management system. -->
-  <a-video src="#penguin-sledding" width="20" height="9" position="0 5 -25"></a-video>
+  <a-video src="#penguin-sledding" width="20" height="9" position="0 9 -25"></a-video>
   <!-- Defining the URL inline. Not recommended but more comfortable for web developers. -->
-  <a-entity bmfont-text="text: Hello World;"></a-entity>
+
+
+  <a-asset-item id="dna-obj" src="DNA.obj"></a-asset-item>
+    <a-asset-item id="dna-mtl" src="chair-test.mtl"></a-asset-item>
+  </a-assets>
+
+  <a-entity id = "responsive">
+    
+  </a-entity>
+
+
+ <!-- <a-entity position="-2 1 -2" rotation = "0 180 0"   scale = ".002 .002 .002" obj-model="obj: #dna-obj; mtl: #dna-mtl">
+    <a-animation attribute="rotation"
+               dur="5000"
+               fill="forwards"
+               to="360 360 0"
+               repeat="indefinite"></a-animation>
+  </a-entity>
+-->
+
 </a-scene>
 
   <script src="js/AudioTranslation.js"> </script>
@@ -94,5 +119,4 @@
   var ctx = canvas.getContext("2d");
   ctx.font = "30px Arial";
   ctx.fillText("",10,50);
-  
 </script>

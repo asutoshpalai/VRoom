@@ -48,6 +48,27 @@ var key_phrases = [];
 
 function handleSubs(recognition, translation) {
   document.getElementById("subs").setAttribute("text", "color: white; align: center; value: "+recognition);
+  
+  if(recognition.toLowerCase().indexOf("biology") >-1 ) {
+     document.getElementById("responsive").innerHTML = ("<a-entity position=\"-7 6 -10\" rotation = \"0 180 0\"   scale = \".007 .007 .007\" obj-model=\"obj: #dna-obj; mtl: #dna-mtl\"><a-animation attribute=\"rotation\" dur=\"5000\" fill=\"forwards\" to=\"360 360 0\" repeat=\"indefinite\"></a-animation></a-entity>");
+     setTimeout(function(){ 
+           document.getElementById("responsive").innerHTML = "";
+      sky.removeAttribute("src");}, 14000);
+  }
+  
+  if(recognition.toLowerCase().indexOf("chemistry") >-1 ) {
+    alert("chemistry");
+  }
+  
+  if(recognition.toLowerCase().indexOf("solar") >-1 ) {
+    document.getElementById("sky").setAttribute("src", "img.jpg")
+    sky.removeAttribute("color");
+    setTimeout(function(){ 
+      document.getElementById("sky").setAttribute("color", "#000")
+      sky.removeAttribute("src");}, 9000);
+  }
+
+
   var canvas = document.getElementById("helloWorldCanvas");
   var ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -92,6 +113,9 @@ function extractKeyPhrases(string) {
     key_phrases = key_phrases.concat(data.documents[0].keyPhrases.filter(function (x) {
       return key_phrases.indexOf(x) === -1;
     }));
+
+    document.getElementById("tags").setAttribute("text", "color: white; align: center; value: "+getInLine(key_phrases));
+
     console.log(key_phrases);
   })
   .fail(function() {
@@ -103,7 +127,14 @@ function extractKeyPhrases(string) {
 
 })();
 
-
+function getInLine(key) {
+  var output = "TAGS\n";
+  for (var i = 0; i<key.length; i++) {
+    output+=key[i];
+    output+="\n";
+  }
+  return output;
+}
 function addPerson() {
   if(TOTAL==0) {
     $("#topbar").append("<a-entity position=\"-2 0 -3\" rotation = \"0 180 0\"  scale = \".05 .05 .05\" obj-model=\"obj: #chair-test-obj; mtl: #chair-test-mtl\"> </a-entity>");
@@ -127,3 +158,5 @@ var canvas = document.getElementById("helloWorldCanvas");
   ctx.rect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "black";
   ctx.fill();
+
+
