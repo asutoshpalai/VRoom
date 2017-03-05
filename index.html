@@ -1,4 +1,3 @@
-
  <html>
   <head>
     <title>A-Frame Passthrough Component - Basic</title>
@@ -22,7 +21,14 @@
       </a-entity>
 
 
-  <a-sky color="#AAB"></a-sky>
+  <!--<a-sky color="#AAB"></a-sky>-->
+  	<a-assets>
+        <video id="video" src="video.mp4"
+               autoplay loop crossorigin></video>
+    </a-assets>
+
+    <a-videosphere src="#video" rotation="0 180 0"></a-videosphere>
+
   <a-assets>
     <img id="highlight1" src="radial-highlight.png">
     <img id="shadow3" src="radial-shadow-3.png">
@@ -36,8 +42,14 @@
 
   <a-entity position="2 0 -3" rotation = "0 180 0"  scale = ".05 .05 .05" obj-model="obj: #chair-test-obj; mtl: #chair-test-mtl"></a-entity>
 
+  <a-asset-item id="man-obj" src="man.obj"></a-asset-item>
+    <a-asset-item id="man-mtl" src="chair-test.mtl"></a-asset-item>
+  </a-assets>
 
-  <a-entity position="0 0 0" rotation = "0 180 0"  scale = ".05 .05 .05" obj-model="obj: #chair-test-obj; mtl: #chair-test-mtl"></a-entity>
+  <a-entity position="-2 1.4 -4" rotation = "0 90 20"  scale = ".05 .05 .05" obj-model="obj: #man-obj; mtl: #man-mtl"></a-entity>
+
+
+  <a-entity position="2 1.4 -4" rotation = "0 90 20"  scale = ".05 .05 .05" obj-model="obj: #man-obj; mtl: #man-mtl"></a-entity>
 
   <a-entity position="0 0 -10">
     <a-image position="0 -.2 5" src="#highlight1" rotation="-90 0 0"
