@@ -44,6 +44,7 @@ webrtc.on('createdPeer', function(peer){
 
 var full_speech = [];
 var key_phrases = [];
+var key_lookup = {}; 
 
 function handleSubs(recognition, translation) {
   document.getElementById("subs").setAttribute("text", "color: white; align: center; value: "+recognition);
@@ -76,20 +77,56 @@ function extractKeyPhrases(string) {
     type: "POST",
     // Request body
    data: data
-  })
-  .done(function(data) {
+  }).done(function(data) {
     console.log("TAgs:");
     console.log(data.documents[0].keyPhrases);
-    key_phrases = key_phrases.concat(data.documents[0].keyPhrases.filter(function (x) {
+    var new_phrases = data.documents[0].keyPhrases.filter(function (x) {
       return key_phrases.indexOf(x) === -1;
-    }));
+    });
+
+    var i;
+    for(i in new_phrases) {
+      search_result(new_phrases[i]);
+    }
+
+    key_phrases = key_phrases.concat(new_phrases);
     console.log(key_phrases);
+  }).fail(function() {
+    console.log("error fetching key_phrases");
+
+  });
+
+};
+
+function search_result(string) {
+
+  if(!string) return;
+
+  var data = {
+    q: string,
+    mkt: 'en-in'
+  }
+
+  $.ajax({
+    url: "https://api.cognitive.microsoft.com/bing/v5.0/search",
+    beforeSend: function(xhrObj){
+      // Request headers
+      xhrObj.setRequestHeader("Content-Type","application/json");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","2971168a19bc4218ad68110566bae1cb");
+    },
+    // Request body
+   data: data
+  })
+  .done(function(data) {
+    console.log("search:");
+    console.log(key_lookup);
+    key_lookup[string] = data.webPages.value[0].snippet;
   })
   .fail(function() {
     alert("error");
 
   });
 
-};
+}
 
 })();
