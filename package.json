@@ -1,0 +1,41 @@
+{
+  "name": "vroom",
+  "version": "1.0.0",
+  "description": "Virtual classroom",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asutoshpalai/VRoom.git"
+  },
+  "keywords": [
+    "vr",
+    "aframe",
+    "google",
+    "cardboard",
+    "virtual",
+    "reality"
+  ],
+  "contributors": [
+    {
+      "name": "Asutosh Palai",
+      "email": "asupalai@gmail.com"
+    },
+    {
+      "name": "Harkirat Singh",
+      "email": "harkirat96@gmail.com"
+    },
+    {
+      "name": "Arpit Singla",
+      "email": "arpit270896@gmail.com"
+    }
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asutoshpalai/VRoom/issues"
+  },
+  "homepage": "https://github.com/asutoshpalai/VRoom#readme"
+}
