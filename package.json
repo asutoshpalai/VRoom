@@ -37,5 +37,8 @@
   "bugs": {
     "url": "https://github.com/asutoshpalai/VRoom/issues"
   },
-  "homepage": "https://github.com/asutoshpalai/VRoom#readme"
+  "homepage": "https://github.com/asutoshpalai/VRoom#readme",
+  "dependencies": {
+    "ws": "^2.2.1"
+  }
 }
