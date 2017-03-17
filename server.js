@@ -1,6 +1,7 @@
 var HTTPS_PORT = 8443;
 
 var fs = require('fs');
+var express = require('express');
 var https = require('https');
 var querystring = require('querystring');
 var WebSocketServer = require('ws').Server;
@@ -12,36 +13,32 @@ var serverConfig = {
 };
 
  var accToken = null;
-//var accToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZSI6Imh0dHBzOi8vZGV2Lm1pY3Jvc29mdHRyYW5zbGF0b3IuY29tLyIsInN1YnNjcmlwdGlvbi1pZCI6IjY2MDg2YmU2Y2UyYTQ2Y2U5MjllNDZmN2I3YWI3ZWIyIiwicHJvZHVjdC1pZCI6IlNwZWVjaFRyYW5zbGF0b3IuUzEiLCJjb2duaXRpdmUtc2VydmljZXMtZW5kcG9pbnQiOiJodHRwczovL2FwaS5jb2duaXRpdmUubWljcm9zb2Z0LmNvbS9pbnRlcm5hbC92MS4wLyIsImF6dXJlLXJlc291cmNlLWlkIjoiL3N1YnNjcmlwdGlvbnMvOGEzMGYxZjEtNWYyNC00ZGViLWFiYTgtMWVmMmM2ZTYwMzIxL3Jlc291cmNlR3JvdXBzL3Jlc291cmNlLWdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvYWNjb3VudHMvc2lsZW50LWFzc2Fzc2lucyIsImlzcyI6InVybjptcy5jb2duaXRpdmVzZXJ2aWNlcyIsImF1ZCI6InVybjptcy5taWNyb3NvZnR0cmFuc2xhdG9yIiwiZXhwIjoxNDg4NjY3MTM1fQ.jk3hsgtVcJsUrU4tq76x1RkVWkQ6N7trA5W01vUYlEk';
 
 // ----------------------------------------------------------------------------------------
 
-// Create a server for the client html page
-var handleRequest = function(request, response) {
-  // Render the single client html file for any request the HTTP server receives
-  console.log('request received: ' + request.url);
+var app = express();
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
 
-  if(request.url == '/') {
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end(fs.readFileSync('index.html'));
-  } else if(request.url == '/test') {
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end(fs.readFileSync('test.html'));
-  } else if(request.url == '/token') {
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end(accToken);
-    getAdmToken();
-  } else if(request.url == '/server') {
-    response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end(fs.readFileSync('server.html'));
-  } else if(fs.existsSync(request.url.substr(1))) {
-    response.end(fs.readFileSync(request.url.substr(1)));
-  }
-};
+app.get("/", function(req, response) {
+  response.render('index.ejs');
+});
 
-var httpsServer = https.createServer(serverConfig, handleRequest);
+app.get("/test", function(req, response) {
+  response.render('test.ejs');
+});
+
+app.get("/token", function(req, response) {
+  response.end(accToken);
+  getAdmToken();
+});
+
+app.get("/server", function(req, response) {
+  response.render('server.ejs');
+});
+
+var httpsServer = https.createServer(serverConfig, app);
 httpsServer.listen(HTTPS_PORT, '0.0.0.0');
-getAdmToken();
 // ----------------------------------------------------------------------------------------
 
 // Create a server for handling websocket calls
@@ -61,9 +58,7 @@ wss.broadcast = function broadcast(data) {
       client.send(data);
 
     }
-
   });
-
 };
 
 function getAdmToken() {
@@ -102,5 +97,4 @@ function getAdmToken() {
 }
 
 getAdmToken();
-
 console.log('Server running. Visit https://localhost:' + HTTPS_PORT + ' in Firefox/Chrome (note the HTTPS; there is no HTTP -> HTTPS redirect!)');
