@@ -1,127 +1,47 @@
- <html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <meta charset=“utf-8”>
-    <title>A-Frame Passthrough Component - Basic</title>
-	  <script src="js/vendor/aframe.min.js"></script>
-	  <script src="js/vendor/aframe-passthrough-component.min.js"></script>
-    <script src="js/vendor/simplewebrtc.js"></script> 
-    <script src="js/vendor/jquery-3.1.0.min.js"></script> 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/vendor/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <title></title>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/vendor/jquery-3.1.0.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+    <link href="css/styles.css" rel="stylesheet">
   </head>
-  <body>
-
- 
-
-<a-scene id = "topbar">
-
-<!--      <a-entity position="-2 2.5 -3"
-                text="width: 3; color: white; value: John">
-      </a-entity>
-
-      <a-entity position="3 2.5 -3"
-                text="width: 3; color: white; value: John">
-      </a-entity>
--->
-      <a-entity id = "subs" position="0 2 -10"
-                geometry="primitive: plane; width: auto; height: auto" material="color: black"
-                  text="color: white; align: center; value: VR Classroom; width: 12; ">
-      </a-entity>
-
-
-      <a-entity id = "tags" position="8 6 -10" rotation = "0 -20 0"
-                geometry="primitive: plane; width: auto; height: auto" material="color: black"
-                  text="color: white; align: center; value: Tags; width: 7; ">
-      </a-entity>
-
-      <a-entity id = "scrapedData" position="10 4 2" rotation = "0 -80 0"
-                geometry="primitive: plane; width: auto; height: auto" material="color: black"
-                  text="color: white; align: center; value: Scraped Data; width: 7; ">
-      </a-entity>
-
-<!--
-      <a-entity id = "subsInHindi" position="0 5 -10"
-                geometry="primitive: plane; width: auto; height: auto" material="color: black"
-                  text="color: white; align: center; value: VREDU; width: 12; ">
-      </a-entity>
--->
-  
-  <a-sky id = "sky" color="#000"></a-sky>
-  	
-  <a-assets>
-    <img id="highlight1" src="radial-highlight.png">
-    <img id="shadow3" src="radial-shadow-3.png">
-  </a-assets>
-
-  <a-asset-item id="chair-test-obj" src="chair-test.obj"></a-asset-item>
-    <a-asset-item id="chair-test-mtl" src="chair-test.mtl"></a-asset-item>
-  </a-assets>
-
-<!--  <a-entity position="-2 0 -3" rotation = "0 180 0"  scale = ".05 .05 .05" obj-model="obj: #chair-test-obj; mtl: #chair-test-mtl"></a-entity>
-
-  <a-entity position="2 0 -3" rotation = "0 180 0"  scale = ".05 .05 .05" obj-model="obj: #chair-test-obj; mtl: #chair-test-mtl"></a-entity> -->
-
-  <a-asset-item id="man-obj" src="man.obj"></a-asset-item>
-    <a-asset-item id="man-mtl" src="chair-test.mtl"></a-asset-item>
-  </a-assets>
-<!--
-  <a-entity position="-2 1.4 -4" rotation = "0 90 20"  scale = ".05 .05 .05" obj-model="obj: #man-obj; mtl: #man-mtl"></a-entity>
-
-
-  <a-entity position="2 1.4 -4" rotation = "0 90 20"  scale = ".05 .05 .05" obj-model="obj: #man-obj; mtl: #man-mtl"></a-entity>
--->
-  <a-entity position="0 0 -10">
-    <a-image position="0 -.2 5" src="#highlight1" rotation="-90 0 0"
-             scale="30 30 30">
-     </a-image>
-  </a-entity>
-
-  <a-assets>
-    <canvas id="helloWorldCanvas" crossOrigin="anonymous">
-    </canvas>
-  </a-assets>
-  <a-entity material="shader: flat; src: #helloWorldCanvas"
-                geometry="primitive: plane; width: 9; height: 3"
-                position="0 0 -20" rotation="0 0 0">
-  </a-entity>
-
-
-  <a-assets>
-    <video id="penguin-sledding" autoplay src="#"></video>
-  </a-assets>
-  <!-- Using the asset management system. -->
-  <a-video src="#penguin-sledding" width="20" height="9" position="0 9 -25"></a-video>
-  <!-- Defining the URL inline. Not recommended but more comfortable for web developers. -->
-
-
-  <a-asset-item id="dna-obj" src="DNA.obj"></a-asset-item>
-    <a-asset-item id="dna-mtl" src="chair-test.mtl"></a-asset-item>
-  </a-assets>
-
-  <a-entity id = "responsive">
-
-  </a-entity>
-
-
- <!-- <a-entity position="-2 1 -2" rotation = "0 180 0"   scale = ".002 .002 .002" obj-model="obj: #dna-obj; mtl: #dna-mtl">
-    <a-animation attribute="rotation"
-               dur="5000"
-               fill="forwards"
-               to="360 360 0"
-               repeat="indefinite"></a-animation>
-  </a-entity>
--->
-
-</a-scene>
-
-  <script src="js/AudioTranslation.js"> </script>
-  <script src="js/MediaStreamRecorder.js"></script>
-  <script src="js/client.js"> </script>
-
-  </body>
+<body>
+  <div class="super">
+    <div class="container main">
+      <div class="home-left row col-md-6 vertical-center-container">
+        <form class="lecture" action="lecture">
+          <h1>Start a lecture</h1>
+          <input class="input-field" name="room" type="text" placeholder="Room name" >
+          <input class="btn btn-success" type="submit" value="Start">
+        </form>
+      </div>
+      <div class="home-right row col-md-6 vertical-center-container">
+        <form class="lecture" action="join">
+          <h1>Join a lecture</h1>
+          <input class="input-field" name="room" type="text" placeholder="Room name" >
+          <input class="btn btn-success" type="submit" value="Join">
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
-
-<script>
-  var canvas = document.getElementById("helloWorldCanvas");
-  var ctx = canvas.getContext("2d");
-  ctx.font = "30px Arial";
-  ctx.fillText("",10,50);
-</script>

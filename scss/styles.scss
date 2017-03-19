@@ -8,18 +8,64 @@ html, body {
   height: 100%;
 }
 
+.input-field {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+  border: 1px solid rgba(255,255,255,0.4);
+  background-color: rgba(255,255,255,0.2);
+  width: 250px;
+  border-radius: 3px;
+  padding: 10px 15px;
+  margin: 0 auto 10px auto;
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  font-weight: 300;
+}
+
 .main {
   min-height: 100%;
   height: 100%;
 
+  text-align: center;
+  color: white;
+
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: white;
+  }
+  ::-moz-placeholder { /* Firefox 19+ */
+    color: white;
+  }
+  ::-ms-input-placeholder { /* IE 10+ */
+    color: white;
+  }
+  ::-moz-placeholder { /* Firefox 18- */
+    color: white;
+  }
+
+  input {
+    margin-top: 1em;
+  }
+
+}
+
+.vertical-center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .home-left {
-  background: rgba(103, 132, 105, 0.68);
+  background: rgba(81, 176, 163, 0.71);
   height: 100%;
 }
 
 .home-right {
-  background: rgba(103, 132, 105, 0.68);
+  background: rgba(81, 196, 164, 0.63);
   height: 100%;
 }

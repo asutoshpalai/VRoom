@@ -1,5 +1,7 @@
 (function() {
 
+var roomName = (new URL(document.location)).searchParams.get('room');
+
 var nicks = ["Bonnie Rowsey", "Sima Landwehr", "Agnes Stringfellow", "Silva Reta", "Josette Dyal", "Adan Thweatt", "Edwardo Vivanco", "Wava Hinds", "Cyndi Divine", "Jadwiga Saur", "Renato Whidbee", "Kathi Pitt", "Mabelle Sutcliffe", "Vernell Domingue", "Refugia Latham", "Larisa Depaz", "Myrtle Reinhold", "Miki Griffiths", "Hayley Keebler", "Lakeisha Huffines"];
 nick = nicks[Math.floor(Math.random()*nicks.length)];
 
@@ -17,11 +19,9 @@ webrtc = new SimpleWebRTC({
   //url: 'https://192.168.0.138:8888'
 
 });
-// we have to wait until it's ready
-webrtc.on('readyToCall', function () {
-    // you can name it anything
-    webrtc.joinRoom('arpitsing');
 
+webrtc.on('readyToCall', function () {
+    webrtc.joinRoom(roomName);
 });
 
 webrtc.on('videoAdded', function(videoEl, peer) {

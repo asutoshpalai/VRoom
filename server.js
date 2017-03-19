@@ -41,7 +41,7 @@ app.get("/", function(req, response) {
   response.render('index.ejs');
 });
 
-app.get("/client", function(req, response) {
+app.get("/join", function(req, response) {
   response.render('client.ejs');
 });
 
@@ -54,7 +54,7 @@ app.get("/token", function(req, response) {
   getAdmToken();
 });
 
-app.get("/server", function(req, response) {
+app.get("/lecture", function(req, response) {
   response.render('server.ejs');
 });
 
