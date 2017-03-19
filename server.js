@@ -1,10 +1,16 @@
-var HTTPS_PORT = 8443;
-
 var fs = require('fs');
 var express = require('express');
 var https = require('https');
 var querystring = require('querystring');
 var WebSocketServer = require('ws').Server;
+var sassMiddleware = require('node-sass-middleware')
+require('dotenv').config()
+
+function config(name) {
+  return process.env[name];
+}
+
+var HTTPS_PORT = config('PORT');
 
 // Yes, SSL is required
 var serverConfig = {
@@ -12,16 +18,31 @@ var serverConfig = {
   cert: fs.readFileSync('cert.pem'),
 };
 
- var accToken = null;
+var accToken = null;
 
 // ----------------------------------------------------------------------------------------
 
+// console.log(sass);
+
 var app = express();
+app.use(
+  sassMiddleware({
+    src: __dirname + '/scss',
+    dest: __dirname + '/public/css',
+    debug: true,
+    prefix:  '/css'
+  })
+);
+
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 app.get("/", function(req, response) {
   response.render('index.ejs');
+});
+
+app.get("/client", function(req, response) {
+  response.render('client.ejs');
 });
 
 app.get("/test", function(req, response) {
