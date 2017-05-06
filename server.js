@@ -3,7 +3,9 @@ var express = require('express');
 var https = require('https');
 var querystring = require('querystring');
 var WebSocketServer = require('ws').Server;
-var sassMiddleware = require('node-sass-middleware')
+var sassMiddleware = require('node-sass-middleware');
+var bodyParser = require('body-parser');
+
 require('dotenv').config()
 
 function config(name) {
@@ -20,6 +22,8 @@ var serverConfig = {
 
 var accToken = null;
 
+var rooms_languages = {};
+
 // ----------------------------------------------------------------------------------------
 
 // console.log(sass);
@@ -34,6 +38,9 @@ app.use(
   })
 );
 
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
@@ -41,8 +48,18 @@ app.get("/", function(req, response) {
   response.render('index.ejs');
 });
 
-app.get("/join", function(req, response) {
-  response.render('client.ejs');
+app.post("/join", function(req, response) {
+  if (!rooms_languages.hasOwnProperty(req.body.room)) {
+    response.status("404");
+    response.end("Room doesn't exist");
+  }
+
+  response.render('client.ejs', {
+    room: req.body.room,
+    teacher_lang: rooms_languages[req.body.room],
+    audio_lang: req.body['audio-lang'],
+    sub_lang: req.body['sub-lang']
+  });
 });
 
 app.get("/test", function(req, response) {
@@ -54,9 +71,12 @@ app.get("/token", function(req, response) {
   getAdmToken();
 });
 
-app.get("/lecture", function(req, response) {
-  response.render('server.ejs');
+app.post("/lecture", function(req, response) {
+  rooms_languages[req.body.room] = req.body.lang;
+  response.render('server.ejs', {room: req.body.room});
 });
+
+app.get("/languages", getLanguages);
 
 var httpsServer = https.createServer(serverConfig, app);
 httpsServer.listen(HTTPS_PORT, '0.0.0.0');
@@ -81,6 +101,32 @@ wss.broadcast = function broadcast(data) {
     }
   });
 };
+
+function getLanguages(req, response) {
+  var langURL = "https://dev.microsofttranslator.com/languages?scope=speech,text&api-version=1.0";
+
+  var post_options = {
+    host: 'dev.microsofttranslator.com',
+    path: '/languages?scope=speech,text&api-version=1.0',
+    method: 'GET',
+  }
+
+  var post_req = https.get(post_options, function(res) {
+    res.setEncoding('utf-8');
+    if (res.statusCode == 200) {
+      text = '';
+      res.on('data', function(chunk) {
+        text += chunk;
+      }).on('end', function() {
+        response.send(text);
+      });
+    }
+    else {
+      console.log("error" + res.status);
+      response.send("error");
+    }
+  });
+}
 
 function getAdmToken() {
   var post_data = querystring.stringify({
@@ -108,8 +154,7 @@ function getAdmToken() {
       });
     }
     else {
-      accToken = ERR_REQ_FAIL;
-      console.glog('[generateAdmToken] Failed with status code ' + res.statusCode, "error");
+      console.log('[generateAdmToken] Failed with status code ' + res.statusCode, "error");
     }
   });
 

@@ -1,6 +1,6 @@
 (function() {
 
-var roomName = (new URL(document.location)).searchParams.get('room');
+var roomName = $('#roomName').html();
 
 var nicks = ["Bonnie Rowsey", "Sima Landwehr", "Agnes Stringfellow", "Silva Reta", "Josette Dyal", "Adan Thweatt", "Edwardo Vivanco", "Wava Hinds", "Cyndi Divine", "Jadwiga Saur", "Renato Whidbee", "Kathi Pitt", "Mabelle Sutcliffe", "Vernell Domingue", "Refugia Latham", "Larisa Depaz", "Myrtle Reinhold", "Miki Griffiths", "Hayley Keebler", "Lakeisha Huffines"];
 nick = nicks[Math.floor(Math.random()*nicks.length)];
@@ -28,7 +28,13 @@ webrtc.on('videoAdded', function(videoEl, peer) {
   var video = document.getElementById('penguin-sledding');
   video.src = window.URL.createObjectURL(peer.stream);
   video.play();
-  StartAudioTransSession(peer.stream, handleSubs);
+
+  var langs = {
+    source: $('#teacher-lang').html(),
+    target: $('#sub-lang').html()
+  };
+  
+  StartAudioTransSession(peer.stream, handleSubs, langs);
   videoEl.display = null;
 });
 

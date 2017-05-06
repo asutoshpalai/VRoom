@@ -28,20 +28,80 @@
   <div class="super">
     <div class="container main">
       <div class="home-left row col-md-6 vertical-center-container">
-        <form class="lecture" action="lecture">
+        <form class="lecture" id="teacher-form" action="lecture" method="POST">
           <h1>Start a lecture</h1>
           <input class="input-field" name="room" type="text" placeholder="Room name" >
+          <select class="form-control" name="lang" id="teacher-lang"></select>
           <input class="btn btn-success" type="submit" value="Start">
         </form>
       </div>
       <div class="home-right row col-md-6 vertical-center-container">
-        <form class="lecture" action="join">
+        <form class="lecture" id="student-form" action="join" method="POST">
           <h1>Join a lecture</h1>
           <input class="input-field" name="room" type="text" placeholder="Room name" >
+          <span>Audio Language:</span><select class="form-control" name="audio-lang" id="student-audio-lang"></select>
+          <br>
+          <span>Subtitle Language:</span><select class="form-control" name="sub-lang" id="student-sub-lang"></select>
           <input class="btn btn-success" type="submit" value="Join">
         </form>
       </div>
     </div>
   </div>
 </body>
+<script type="text/javascript">
+  var languages = localStorage.languages;
+  try {
+    languages = JSON.parse(languages);
+  }
+  catch(err) {
+    languages = {};
+  }
+
+  if (!languages['teacher']) {
+    languages['teacher'] = 'en';
+  }
+  
+  if (!languages['student-audio']) {
+    languages['student-audio'] = 'en';
+  }
+
+  if (!languages['student-sub']) {
+    languages['student-sub'] = 'en';
+  }
+
+  $.get('/languages', function(data) {
+    langs = JSON.parse(data);
+    $.each(langs['speech'], function(key, value) {
+      if (value['language'] == languages['teacher']) {
+        $('#teacher-lang').append('<option value="' + value['language'] + '" selected="selected">' + value['name'] + '</option>')
+      }
+      else {
+        $('#teacher-lang').append('<option value="' + value['language'] + '">' + value['name'] + '</option>')
+      }
+      if (value['language'] == languages['student-audio']) {
+        $('#student-audio-lang').append('<option value="' + value['language'] + '" selected="selected">' + value['name'] + '</option>')
+      }
+      else {
+        $('#student-audio-lang').append('<option value="' + value['language'] + '">' + value['name'] + '</option>')
+      }
+    });
+    $.each(langs['text'], function(key, value) {
+      if (key == languages['student-sub']) {
+        $('#student-sub-lang').append('<option value="' + key + '" selected="selected">' + value['name'] + '</option>')
+      }
+      else {
+        $('#student-sub-lang').append('<option value="' + key + '">' + value['name'] + '</option>')
+      }
+    });
+  }).fail("error!");
+
+  $('form').on('submit', function() {
+    localStorage.languages = JSON.stringify({
+      'teacher': $('#teacher-lang').val(),
+      'student-audio': $('#student-audio-lang').val(),
+      'student-sub': $('#student-sub-lang').val()
+    });
+  });
+
+</script>
 </html>

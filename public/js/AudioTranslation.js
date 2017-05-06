@@ -1,8 +1,8 @@
 ﻿//Set default settings
 var sourceLang = "en";
 var sourceLangName = "English";
-var targetLang = "hi";
-var targetLangName = "Italian";
+var targetLang = "en";
+var targetLangName = "English";
 var partialFrequency = 2;
 var profanityFilter = "on";
 var textSize = "small";
@@ -99,9 +99,10 @@ function TerminateConnections(closeStream) {
   console.debug("Terminated connections");
 }
 
+function StartAudioTransSession(strm, rCB, langs) {
+  sourceLang = langs['source'];
+  targetLang = langs['target'];
 
-
-function StartAudioTransSession(strm, rCB) {
   resultsCB = rCB;
   stream = strm;
   if (stream)
@@ -208,43 +209,6 @@ function findMatch(userLang, langArray) {
     }
   }
   return false;
-}
-
-//This function is called on page load
-//The purpose of this function is to enumerate all speech recognition and translation languages
-function getLang() {
-  var langURL = "https://dev.microsofttranslator.com/languages?scope=speech,text&api-version=1.0";
-
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      var results = JSON.parse(xmlhttp.responseText);
-      var sourceLangArray = convertToArray(results.speech);
-      var targetLangArray = convertToArray(results.text);
-      var userLang = (navigator.language).substring(0, 2);
-      var match1 = findMatch(userLang, sourceLangArray);
-      if (match1) {
-        sourceLang = match1.key;
-        sourceLangName = match1.name;
-      }
-      var match2 = findMatch(userLang, targetLangArray);
-      if (match2) {
-        targetLang = match2.key;
-        targetLangName = match2.name;
-      }
-
-      //save the languages
-      chrome.storage.local.set({ 'sourceLanguage': sourceLang, 'targetLanguage': targetLang, 'sourceLanguageName': sourceLangName, 'targetLanguageName': targetLangName }, function () {
-        if (chrome.runtime.lastError) {
-          Logger.error("Failed to save the selected options at runtime", chrome.runtime.lastError);
-        }
-      });
-      console.log({ 'sourceLanguage': sourceLang, 'targetLanguage': targetLang, 'sourceLanguageName': sourceLangName, 'targetLanguageName': targetLangName });
-    }
-  }
-  xmlhttp.open("GET", langURL, true);
-  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xmlhttp.send();
 }
 
 

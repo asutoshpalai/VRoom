@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/asutoshpalai/VRoom#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
