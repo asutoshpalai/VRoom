@@ -2,17 +2,17 @@ var fs = require('fs');
 var express = require('express');
 var https = require('https');
 var querystring = require('querystring');
-var WebSocketServer = require('ws').Server;
 var sassMiddleware = require('node-sass-middleware');
 var bodyParser = require('body-parser');
 
+console.log("AsdasdasdaAsdasdasdaAsdasdasdaAsdasdasdaAsdasdasdaAsdasdasdaAsdasdasdaAsdasdasdaAsdasdasda");
 require('dotenv').config()
 
 function config(name) {
   return process.env[name];
 }
 
-var HTTPS_PORT = config('PORT');
+var HTTPS_PORT = 3000;
 
 // Yes, SSL is required
 var serverConfig = {
@@ -79,28 +79,39 @@ app.post("/lecture", function(req, response) {
 app.get("/languages", getLanguages);
 
 var httpsServer = https.createServer(serverConfig, app);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+var io = require('socket.io')(httpsServer);
+
+var people = {};
+var positions = 0;
+io.on('connection', function(socket)
+{
+	socket.emit("id", socket.id);
+	console.log(socket.id);
+	for (var person in people) {
+		socket.emit("add", people[person]);
+	}
+	socket.emit("position", (positions));
+	people[socket.id] = {id : socket.id, position: (positions)};
+	socket.broadcast.emit('add', people[socket.id]);
+	positions+=2;
+	socket.on("data", function(delta) {
+		socket.broadcast.emit('data', delta);
+	});
+
+	socket.on("disconnect", function() {
+		delete people[socket.id];
+		console.log("disconnected");
+	})
+
+});
+
+///////////////////////////////////////////////////////////////////////////////////////
 httpsServer.listen(HTTPS_PORT, '0.0.0.0');
 // ----------------------------------------------------------------------------------------
 
 // Create a server for handling websocket calls
-var wss = new WebSocketServer({server: httpsServer});
-
-wss.on('connection', function(ws) {
-  ws.on('message', function(message) {
-    // Broadcast any received message to all clients
-    console.log('received: %s', message);
-    wss.broadcast(message);
-  });
-});
-
-wss.broadcast = function broadcast(data) {
-  wss.clients.forEach(function each(client) {
-    if (client.readyState === WebSocketServer.OPEN) {
-      client.send(data);
-
-    }
-  });
-};
 
 function getLanguages(req, response) {
   var langURL = "https://dev.microsofttranslator.com/languages?scope=speech,text&api-version=1.0";

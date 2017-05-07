@@ -182,14 +182,14 @@ function getInLine(key) {
 }
 function addPerson() {
   if(TOTAL==0) {
-    $("#topbar").append("<a-entity position=\"-2 0 -3\" rotation = \"0 180 0\"  scale = \".05 .05 .05\" obj-model=\"obj: #chair-test-obj; mtl: #chair-test-mtl\"> </a-entity>");
-    $("#topbar").append("<a-entity position=\"-2 1.4 -4\" rotation = \"0 90 20\"  scale = \".05 .05 .05\" obj-model=\"obj: #man-obj; mtl: #man-mtl\"></a-entity>");
-    $("#topbar").append(" <a-entity position=\"-2 2.5 -3\" text=\"width: 3; color: white; value: John\"></a-entity>");
+    $("#scene").append("<a-entity position=\"-2 0 -3\" rotation = \"0 180 0\"  scale = \".05 .05 .05\" obj-model=\"obj: #chair-test-obj; mtl: #chair-test-mtl\"> </a-entity>");
+    $("#scene").append("<a-entity position=\"-2 1.4 -4\" rotation = \"0 90 20\"  scale = \".05 .05 .05\" obj-model=\"obj: #man-obj; mtl: #man-mtl\"></a-entity>");
+    $("#scene").append(" <a-entity position=\"-2 2.5 -3\" text=\"width: 3; color: white; value: John\"></a-entity>");
   }
   if(TOTAL==1) {
-    $("#topbar").append("<a-entity position=\"2 0 -3\" rotation = \"0 180 0\"  scale = \".05 .05 .05\" obj-model=\"obj: #chair-test-obj; mtl: #chair-test-mtl\"> </a-entity>");
-    $("#topbar").append("<a-entity position=\"2 1.4 -4\" rotation = \"0 90 20\"  scale = \".05 .05 .05\" obj-model=\"obj: #man-obj; mtl: #man-mtl\"></a-entity>");
-    $("#topbar").append(" <a-entity position=\"3 2.5 -3\" text=\"width: 3; color: white; value: John\"></a-entity>");    
+    $("#scene").append("<a-entity position=\"2 0 -3\" rotation = \"0 180 0\"  scale = \".05 .05 .05\" obj-model=\"obj: #chair-test-obj; mtl: #chair-test-mtl\"> </a-entity>");
+    $("#scene").append("<a-entity position=\"2 1.4 -4\" rotation = \"0 90 20\"  scale = \".05 .05 .05\" obj-model=\"obj: #man-obj; mtl: #man-mtl\"></a-entity>");
+    $("#scene").append(" <a-entity position=\"3 2.5 -3\" text=\"width: 3; color: white; value: John\"></a-entity>");    
   }
   TOTAL++;
 }
