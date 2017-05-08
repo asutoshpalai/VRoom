@@ -146,7 +146,7 @@ function getLanguages(req, response) {
   });
 }
 
-function getAdmToken(subscription_key, cb) {
+function generateAdmToken(subscription_key, cb) {
   var post_data = querystring.stringify({
     'client_id': '', //your client id,
     'scope': 'http://api.microsofttranslator.com',
