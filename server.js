@@ -169,14 +169,14 @@ function generateAdmToken(subscription_key, cb) {
       res.on('data', function (chunk) {
         //access_token = JSON.parse(chunk).access_token;
         access_token += chunk;
-        console.log('[generateAdmToken] Success');
+        console.log('[generateAdmToken] Success for ' + subscription_key);
       });
       res.on('end', function() {
         cb(access_token);
       });
     }
     else {
-      console.log('[generateAdmToken] Failed with status code ' + res.statusCode, "error");
+      console.log('[generateAdmToken] Failed with status code ' + res.statusCode + ' for ' + subscription_key, "error");
     }
   });
 
@@ -191,7 +191,7 @@ function generateSTTToken() {
 }
 
 function generateTTSToken() {
-  generateAdmToken("0d12ee2cb2824ec09626b927fe001e20", function(access_token) {
+  generateAdmToken("4aba210a818d4f57846710ae5b1e8120", function(access_token) {
     TTS_access_token = access_token;
   })
 }
