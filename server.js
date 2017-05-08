@@ -11,7 +11,7 @@ function config(name) {
   return process.env[name];
 }
 
-var HTTPS_PORT = 3000;
+var HTTPS_PORT = 8443;
 
 // Yes, SSL is required
 var serverConfig = {
