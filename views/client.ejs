@@ -6,6 +6,9 @@
 	  <script src="js/vendor/aframe-passthrough-component.min.js"></script>
     <script src="js/vendor/simplewebrtc.js"></script> 
     <script src="js/vendor/jquery-3.1.0.min.js"></script> 
+    <script src="https://unpkg.com/aframe-template-component@^3.2.1/dist/aframe-template-component.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>
   </head>
   <body>
   <p id="roomName" hidden><%- room %></p>
@@ -14,16 +17,7 @@
   <p id="audio-lang" hidden><%- audio_lang %></p>
   <p id="sub-lang" hidden><%- sub_lang %></p>
 
-<a-scene id = "topbar">
-
-<!--      <a-entity position="-2 2.5 -3"
-                text="width: 3; color: white; value: John">
-      </a-entity>
-
-      <a-entity position="3 2.5 -3"
-                text="width: 3; color: white; value: John">
-      </a-entity>
--->
+<a-scene id = "scene">
       <a-entity id = "subs" position="0 2 -10"
                 geometry="primitive: plane; width: auto; height: auto" material="color: black"
                   text="color: white; align: center; value: VR Classroom; width: 12; ">
@@ -39,38 +33,51 @@
                 geometry="primitive: plane; width: auto; height: auto" material="color: black"
                   text="color: white; align: center; value: Scraped Data; width: 7; ">
       </a-entity>
-
-<!--
-      <a-entity id = "subsInHindi" position="0 5 -10"
-                geometry="primitive: plane; width: auto; height: auto" material="color: black"
-                  text="color: white; align: center; value: VREDU; width: 12; ">
-      </a-entity>
--->
-  
+ 
   <a-sky id = "sky" color="#000"></a-sky>
   	
   <a-assets>
     <img id="highlight1" src="radial-highlight.png">
     <img id="shadow3" src="radial-shadow-3.png">
   </a-assets>
+  <a-assets>
+    <a-mixin id="arm" geometry="primitive: box; depth: 0.08; height: 0.5; width: 0.08"
+                          material="color: #222; shader: flat"></a-mixin>
+            <a-mixin id="eye" geometry="primitive: circle"
+                          material="shader: flat; side: double"></a-mixin>
+        
+            <script id="avatar-template" type="text/html-template">
 
-  <a-asset-item id="chair-test-obj" src="chair-test.obj"></a-asset-item>
-    <a-asset-item id="chair-test-mtl" src="chair-test.mtl"></a-asset-item>
+              <!-- Face. -->
+              <a-entity rotation="0 180 0">
+                    <a-entity mixin="eye" geometry="radius: 0.08"
+                          material="shader: flat; side: double"
+                          position="-0.1 0.1 0.18">
+                  <a-entity mixin="eye" geometry="radius: 0.02"
+                            material="color: #222"
+                            position="0 0 0.03"></a-entity>
+                </a-entity>
+                <a-entity mixin="eye" geometry="radius: 0.08" position="0.1 0.1 0.18">
+                  <a-entity mixin="eye" geometry="radius: 0.02"
+                            material="color: #222" position="0 0 0.03"></a-entity>
+                </a-entity>
+              </a-entity>
+              <!-- Arms. -->
+              <a-entity class="arms" position="0 -0.3 0">
+                <a-entity mixin="arm" position="-0.3 -0.25 0" rotation="0 0 -10"></a-entity>
+                <a-entity mixin="arm" position="0.3 -0.25 0" rotation="0 0 10"></a-entity>
+              </a-entity>
+            </script>
+            <a-mixin id="avatar"
+                    geometry="primitive: box; depth: 0.3; height: 0.3; width: 0.3"
+                    material="color: #222"
+                    template="src: #avatar-template"></a-mixin>
   </a-assets>
+     <a-entity id = "avt" mixin="avatar" position = "0 1.4 0"></a-entity> 
+      <a-entity id = "cam" position="0 0 0">
+        <a-camera></a-camera>
+      </a-entity>
 
-<!--  <a-entity position="-2 0 -3" rotation = "0 180 0"  scale = ".05 .05 .05" obj-model="obj: #chair-test-obj; mtl: #chair-test-mtl"></a-entity>
-
-  <a-entity position="2 0 -3" rotation = "0 180 0"  scale = ".05 .05 .05" obj-model="obj: #chair-test-obj; mtl: #chair-test-mtl"></a-entity> -->
-
-  <a-asset-item id="man-obj" src="man.obj"></a-asset-item>
-    <a-asset-item id="man-mtl" src="chair-test.mtl"></a-asset-item>
-  </a-assets>
-<!--
-  <a-entity position="-2 1.4 -4" rotation = "0 90 20"  scale = ".05 .05 .05" obj-model="obj: #man-obj; mtl: #man-mtl"></a-entity>
-
-
-  <a-entity position="2 1.4 -4" rotation = "0 90 20"  scale = ".05 .05 .05" obj-model="obj: #man-obj; mtl: #man-mtl"></a-entity>
--->
   <a-entity position="0 0 -10">
     <a-image position="0 -.2 5" src="#highlight1" rotation="-90 0 0"
              scale="30 30 30">
@@ -102,18 +109,34 @@
   <a-entity id = "responsive">
 
   </a-entity>
-
-
- <!-- <a-entity position="-2 1 -2" rotation = "0 180 0"   scale = ".002 .002 .002" obj-model="obj: #dna-obj; mtl: #dna-mtl">
-    <a-animation attribute="rotation"
-               dur="5000"
-               fill="forwards"
-               to="360 360 0"
-               repeat="indefinite"></a-animation>
-  </a-entity>
--->
-
 </a-scene>
+
+<script>var socket = io();
+    var ID;
+    socket.on("id", function(id) {
+      ID = id;
+      document.getElementById("avt").setAttribute("id", ID);
+      document.getElementById(ID).setAttribute("visible", "false")
+    })
+
+    socket.on("data", function(data) {
+      document.getElementById(data.id).setAttribute("rotation", data.rotation);
+    });
+
+    socket.on("add", function(data) {
+      var node = document.createElement("a-entity");
+      node.setAttribute("id", data.id)
+      node.setAttribute("mixin", "avatar")
+      node.setAttribute("position", data.position + " 1.4 0");
+      document.getElementById("scene").appendChild(node)
+    });
+    socket.on("position", function(positions) {
+      document.getElementById(socket.id).setAttribute("position", positions + " 1.4 0");
+      document.getElementById("cam").setAttribute("position", positions + " 0 0");
+    });
+
+    </script>
+    <script src = "js/index.js"></script>
 
   <script src="js/AudioTranslation.js"> </script>
   <script src="js/MediaStreamRecorder.js"></script>
