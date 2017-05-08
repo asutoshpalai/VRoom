@@ -108,7 +108,7 @@ function extractKeyPhrases(string) {
     beforeSend: function(xhrObj){
       // Request headers
       xhrObj.setRequestHeader("Content-Type","application/json");
-      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","14a8f033e94c4819b1d79e67b4a448d7");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","3795edfb1e97461f8a90405f48d33c2d");
     },
     type: "POST",
     // Request body
@@ -151,16 +151,16 @@ function search_result(string) {
     beforeSend: function(xhrObj){
       // Request headers
       xhrObj.setRequestHeader("Content-Type","application/json");
-      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","2971168a19bc4218ad68110566bae1cb");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","a4f7d0c99cd0415893eca30359565eb8");
     },
     // Request body
-   data: data
+    data: data
   })
   .done(function(data) {
     console.log("search:");
     console.log(key_lookup);
     key_lookup[string] = data.webPages.value[0].snippet;
-  document.getElementById("scrapedData").setAttribute("text", "color: white; align: center; value: "+data.webPages.value[0].snippet);
+    document.getElementById("scrapedData").setAttribute("text", "color: white; align: center; value: "+data.webPages.value[0].snippet);
 
   })
   .fail(function() {
@@ -172,6 +172,30 @@ function search_result(string) {
 
 })();
 
+function TTS(text) {
+  var payload = "<speak version='1.0' xml:lang='en-US'><voice xml:lang='en-US' xml:gender='Female' name='Microsoft Server Speech Text to Speech Voice (en-US, ZiraRUS)'>" + text + "</voice></speak>";
+
+  $.ajax({
+    url: 'https://speech.platform.bing.com/synthesize',
+    type: 'POST',
+    data: payload,
+    headers: {
+      'Content-Type' : 'application/ssml+xml',
+      'X-Microsoft-OutputFormat' : 'riff-16khz-16bit-mono-pcm',
+      'Authorization': 'Bearer ' + $('#TTS-access-token').html(),
+      'X-Search-AppId': '4536018260783167850',
+      'X-Search-ClientID': '568930268923078906193',
+      // 'User-Agent': 'VRoom'
+    }
+  })
+  .done(function(data) {
+    console.log(data);
+  })
+  .fail(function() {
+    console.log("error");
+  });
+}
+
 function getInLine(key) {
   var output = "TAGS\n";
   for (var i = 0; i<key.length; i++) {
@@ -180,6 +204,7 @@ function getInLine(key) {
   }
   return output;
 }
+
 function addPerson() {
   if(TOTAL==0) {
     $("#topbar").append("<a-entity position=\"-2 0 -3\" rotation = \"0 180 0\"  scale = \".05 .05 .05\" obj-model=\"obj: #chair-test-obj; mtl: #chair-test-mtl\"> </a-entity>");

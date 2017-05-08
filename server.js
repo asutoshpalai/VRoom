@@ -20,7 +20,8 @@ var serverConfig = {
   cert: fs.readFileSync('cert.pem'),
 };
 
-var accToken = null;
+var STT_access_token = null;
+var TTS_access_token = null;
 
 var rooms_languages = {};
 
@@ -56,10 +57,13 @@ app.post("/join", function(req, response) {
 
   response.render('client.ejs', {
     room: req.body.room,
+    TTS_access_token: TTS_access_token,
     teacher_lang: rooms_languages[req.body.room],
     audio_lang: req.body['audio-lang'],
     sub_lang: req.body['sub-lang']
   });
+
+  generateTTSToken();
 });
 
 app.get("/test", function(req, response) {
@@ -67,8 +71,8 @@ app.get("/test", function(req, response) {
 });
 
 app.get("/token", function(req, response) {
-  response.end(accToken);
-  getAdmToken();
+  response.end(STT_access_token);
+  generateSTTToken();
 });
 
 app.post("/lecture", function(req, response) {
@@ -77,6 +81,10 @@ app.post("/lecture", function(req, response) {
 });
 
 app.get("/languages", getLanguages);
+
+app.get("/privacy-policy", function(req, response) {
+  response.render('privacy_policy.ejs');
+})
 
 var httpsServer = https.createServer(serverConfig, app);
 httpsServer.listen(HTTPS_PORT, '0.0.0.0');
@@ -128,7 +136,7 @@ function getLanguages(req, response) {
   });
 }
 
-function getAdmToken() {
+function getAdmToken(subscription_key, cb) {
   var post_data = querystring.stringify({
     'client_id': '', //your client id,
     'scope': 'http://api.microsofttranslator.com',
@@ -139,18 +147,22 @@ function getAdmToken() {
   // https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key=96d9a06df6fd467392d5ff575fb831c6
   var post_options = {
     host: 'api.cognitive.microsoft.com',
-    path: '/sts/v1.0/issueToken?Subscription-Key=0d12ee2cb2824ec09626b927fe001e20',
+    path: '/sts/v1.0/issueToken?Subscription-Key=' + subscription_key,
     method: 'POST',
     //headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': Buffer.byteLength(post_data) }
   };
 
   var post_req = https.request(post_options, function (res) {
+    access_token = '';
     res.setEncoding('utf8');
     if (res.statusCode == 200) {
       res.on('data', function (chunk) {
-        //accToken = JSON.parse(chunk).access_token;
-        accToken = chunk;
+        //access_token = JSON.parse(chunk).access_token;
+        access_token += chunk;
         console.log('[generateAdmToken] Success');
+      });
+      res.on('end', function() {
+        cb(access_token);
       });
     }
     else {
@@ -162,5 +174,18 @@ function getAdmToken() {
   post_req.end();
 }
 
-getAdmToken();
+function generateSTTToken() {
+  generateAdmToken("878b7a3314024ea1949dbe53f97df863", function(access_token) {
+    STT_access_token = access_token;
+  })
+}
+
+function generateTTSToken() {
+  generateAdmToken("0d12ee2cb2824ec09626b927fe001e20", function(access_token) {
+    TTS_access_token = access_token;
+  })
+}
+
+generateSTTToken();
+generateTTSToken();
 console.log('Server running. Visit https://localhost:' + HTTPS_PORT + ' in Firefox/Chrome (note the HTTPS; there is no HTTP -> HTTPS redirect!)');
