@@ -1,6 +1,7 @@
  <html>
   <head>
     <meta charset=“utf-8”>
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>VRoom</title>
 	  <script src="js/vendor/aframe.min.js"></script>
 	  <script src="js/vendor/aframe-passthrough-component.min.js"></script>
@@ -9,6 +10,8 @@
     <script src="https://unpkg.com/aframe-template-component@^3.2.1/dist/aframe-template-component.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>
+    <script src="https://rawgit.com/ngokevin/aframe-look-at-component/master/dist/aframe-look-at-component.min.js"></script>
+
   </head>
   <body>
   <p id="roomName" hidden><%- room %></p>
@@ -18,22 +21,22 @@
 
 <a-scene id = "scene">
       <a-entity id = "subs" position="0 2 -10"
-                geometry="primitive: plane; width: auto; height: auto" material="color: black"
-                  text="color: white; align: center; value: VR Classroom; width: 12; ">
+                geometry="primitive: plane; width: auto; height: auto" material="color: white"
+                  text="color: #2980b9; align: center; value: VR Classroom; width: 12; ">
       </a-entity>
 
 
       <a-entity id = "tags" position="8 6 -10" rotation = "0 -20 0"
-                geometry="primitive: plane; width: auto; height: auto" material="color: black"
-                  text="color: white; align: center; value: Tags; width: 7; ">
+                geometry="primitive: plane; width: auto; height: auto" material="color: white"
+                  text="color: #2980b9; align: center; value: Tags; width: 7; ">
       </a-entity>
 
       <a-entity id = "scrapedData" position="10 4 2" rotation = "0 -80 0"
-                geometry="primitive: plane; width: auto; height: auto" material="color: black"
-                  text="color: white; align: center; value: Scraped Data; width: 7; ">
+                geometry="primitive: plane; width: auto; height: auto" material="color: white"
+                  text="color: #2980b9; align: center; value: Scraped Data; width: 7; ">
       </a-entity>
  
-  <a-sky id = "sky" color="#000"></a-sky>
+  <a-sky id = "sky" color="#2980b9"></a-sky>
   	
   <a-assets>
     <img id="highlight1" src="radial-highlight.png">
@@ -47,7 +50,9 @@
         
             <script id="avatar-template" type="text/html-template">
 
+
               <!-- Face. -->
+
               <a-entity rotation="0 180 0">
                     <a-entity mixin="eye" geometry="radius: 0.08"
                           material="shader: flat; side: double"
@@ -66,6 +71,9 @@
                 <a-entity mixin="arm" position="-0.3 -0.25 0" rotation="0 0 -10"></a-entity>
                 <a-entity mixin="arm" position="0.3 -0.25 0" rotation="0 0 10"></a-entity>
               </a-entity>
+            <!--name-->
+            <a-entity geometry="primitive: plane; width: 2; height: auto" position = "0 .7 0" material="color: white"
+                  text="color: #2980b9; align: center; value: Arpit Singla; width: 5; " look-at="#cam"></a-entity>
             </script>
             <a-mixin id="avatar"
                     geometry="primitive: box; depth: 0.3; height: 0.3; width: 0.3"
@@ -97,7 +105,14 @@
     <video id="penguin-sledding" autoplay src="#"></video>
   </a-assets>
   <!-- Using the asset management system. -->
-  <a-video src="#penguin-sledding" width="20" height="9" position="0 9 -25"></a-video>
+  <a-video src="#penguin-sledding" width="24" height="13.5" position="8 9 -26" rotation = "0 -46.8 0"></a-video>
+
+  <a-assets>
+    <video id="penguin-sledding" autoplay src="#"></video>
+  </a-assets>
+  <!-- Using the asset management system. -->
+  <a-video src="#penguin-sledding" width="24" height="13.5" position="-8 9 -24.8" rotation = "0 62.16 0"></a-video>
+
   <!-- Defining the URL inline. Not recommended but more comfortable for web developers. -->
 
 
@@ -133,6 +148,8 @@
       document.getElementById(socket.id).setAttribute("position", positions + " 1.4 0");
       document.getElementById("cam").setAttribute("position", positions + " 0 0");
     });
+
+
 
     </script>
     <script src = "js/index.js"></script>
