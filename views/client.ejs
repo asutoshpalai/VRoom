@@ -14,6 +14,7 @@
 
   </head>
   <body>
+  <p id="nick" hidden><%- nick %></p>
   <p id="roomName" hidden><%- room %></p>
   <p id="TTS-access-token" hidden><%- TTS_access_token %></p>
   <p id="teacher-lang" hidden><%- teacher_lang %></p>
@@ -73,8 +74,8 @@
                 <a-entity mixin="arm" position="0.3 -0.25 0" rotation="0 0 10"></a-entity>
               </a-entity>
             <!--name-->
-            <a-entity geometry="primitive: plane; width: 2; height: auto" position = "0 .7 0" material="color: white"
-                  text="color: #2980b9; align: center; value: Arpit Singla; width: 5; " look-at="#cam"></a-entity>
+            <a-entity class="nicker" geometry="primitive: plane; width: 2; height: auto" position = "0 .7 0" material="color: white"
+                  text="color: #2980b9; align: center; value: <%- nick %>; width: 5;" look-at="#cam"></a-entity>
             </script>
             <a-mixin id="avatar"
                     geometry="primitive: box; depth: 0.3; height: 0.3; width: 0.3"
@@ -127,7 +128,9 @@
   </a-entity>
 </a-scene>
 
-<script>var socket = io();
+<script>
+
+		var socket = io();
     var ID;
     socket.on("id", function(id) {
       ID = id;
@@ -145,11 +148,14 @@
       node.setAttribute("mixin", "avatar")
       node.setAttribute("position", data.position + " 1.4 0");
       document.getElementById("scene").appendChild(node)
+			$('.nicker').last().css('text', 'color: #2980b9; align: center; value: ' + "data.nick" + '; width: 5;')
     });
     socket.on("position", function(positions) {
       document.getElementById(socket.id).setAttribute("position", positions + " 1.4 0");
       document.getElementById("cam").setAttribute("position", positions + " 0 0");
     });
+
+    socket.emit("nick", $('#nick').html());
 
 
 

@@ -55,6 +55,7 @@ app.post("/join", function(req, response) {
   }
 
   response.render('client.ejs', {
+    nick: req.body.nick,
     room: req.body.room,
     TTS_access_token: TTS_access_token,
     teacher_lang: rooms_languages[req.body.room],
@@ -76,7 +77,9 @@ app.get("/token", function(req, response) {
 
 app.post("/lecture", function(req, response) {
   rooms_languages[req.body.room] = req.body.lang;
-  response.render('server.ejs', {room: req.body.room});
+  response.render('server.ejs', {
+    room: req.body.room
+  });
 });
 
 app.get("/languages", getLanguages);
@@ -100,19 +103,23 @@ io.on('connection', function(socket)
 		socket.emit("add", people[person]);
 	}
 	socket.emit("position", (positions));
-	people[socket.id] = {id : socket.id, position: (positions)};
-	socket.broadcast.emit('add', people[socket.id]);
-	positions+=2;
-	socket.on("data", function(delta) {
-		socket.broadcast.emit('data', delta);
-	});
 
-	socket.on("disconnect", function() {
-		delete people[socket.id];
-		console.log("disconnected");
-	})
+  socket.on("disconnect", function() {
+    delete people[socket.id];
+    console.log("disconnected");
+  })
 
+  socket.on('nick', function(nick) {
+    // people[socket.id]['name'] = data;
+  	people[socket.id] = {id : socket.id, position: (positions), 'nick': nick};
+  	socket.broadcast.emit('add', people[socket.id]);
+  	positions+=2;
+  	socket.on("data", function(delta) {
+  		socket.broadcast.emit('data', delta);
+  	});
+  });
 });
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 httpsServer.listen(HTTPS_PORT, '0.0.0.0');
