@@ -183,27 +183,36 @@ function search_result(string) {
 
 function TTS(text) {
   var payload = "<speak version=\"1.0\" xml:lang=\"en-US\"><voice xml:lang=\"en-US\" xml:gender=\"Female\" name=\"Microsoft Server Speech Text to Speech Voice (en-US, ZiraRUS)\">" + text + "</voice></speak>";
+  var headers = {
+    'Content-Type' : 'application/ssml+xml',
+    'X-Microsoft-OutputFormat' : 'audio-16khz-32kbitrate-mono-mp3',
+    'Authorization': 'Bearer ' + $('#TTS-access-token').html(),
+    'X-Search-AppId': '07D3234E49CE426DAA29772419F436CA',
+    'X-Search-ClientID': '1ECFAE91408841A480F00935DC390960',
+    // 'User-Agent': 'VRoom'
+  };
+  var url = 'https://speech.platform.bing.com/synthesize';
 
-  $.ajax({
-    url: 'https://speech.platform.bing.com/synthesize',
-    type: 'POST',
-    data: payload,
-    headers: {
-      'Content-Type' : 'application/ssml+xml',
-      'X-Microsoft-OutputFormat' : 'audio-16khz-128kbitrate-mono-mp3',
-      'Authorization': 'Bearer ' + $('#TTS-access-token').html(),
-      'X-Search-AppId': '07D3234E49CE426DAA29772419F436CA',
-      'X-Search-ClientID': '1ECFAE91408841A480F00935DC390960',
-      // 'User-Agent': 'VRoom'
-    }
-  })
-  .done(function(data) {
-    console.log("success");
-    // play data
-  })
-  .fail(function() {
-    console.log("error");
-  });
+  var header;
+  var oReq = new XMLHttpRequest();
+  oReq.open("POST", url);
+  for(header in headers)
+    oReq.setRequestHeader(header, headers[header]);
+
+
+  oReq.responseType = "arraybuffer";
+
+  oReq.onloadend = function() {
+    var arrayBuffer = oReq.response;
+
+    var blob = new Blob([arrayBuffer], {type: this.getResponseHeader("Content-type")});
+    var url = URL.createObjectURL(blob);
+
+    var audio = new Audio(url);
+    audio.play()
+  };
+
+  oReq.send(payload);
 }
 
 function getInLine(key) {
