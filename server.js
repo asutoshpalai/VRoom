@@ -126,10 +126,11 @@ io.on('connection', function(socket) {
   	people[socket.id] = {id : socket.id, position: (positions), 'nick': nick};
   	socket.broadcast.emit('add', people[socket.id]);
   	positions+=2;
-  	socket.on("data", function(delta) {
-  		socket.broadcast.emit('data', delta);
-  	});
   });
+  
+	socket.on("data", function(delta) {
+		socket.broadcast.emit('data', delta);
+	});
 });
 
 
