@@ -63,7 +63,7 @@
   }
   
   if (!languages['student-audio']) {
-    languages['student-audio'] = 'en';
+    languages['student-audio'] = "en-IN, Heera, Apollo (Female)";
   }
 
   if (!languages['student-sub']) {
@@ -73,6 +73,8 @@
   // $.get('/languages', function(data) {
     data = '{"text":{"ru":{"dir":"ltr","name":"Russian"},"sr-Latn":{"dir":"ltr","name":"Serbian (Latin)"},"lt":{"name":"Lithuanian","dir":"ltr"},"sv":{"dir":"ltr","name":"Swedish"},"to":{"name":"Tongan","dir":"ltr"},"fil":{"dir":"ltr","name":"Filipino"},"tlh":{"name":"Klingon","dir":"ltr"},"bn":{"dir":"ltr","name":"Bangla"},"ar":{"name":"Arabic","dir":"rtl"},"ht":{"dir":"ltr","name":"Haitian Creole"},"fj":{"dir":"ltr","name":"Fijian"},"he":{"name":"Hebrew","dir":"rtl"},"otq":{"dir":"ltr","name":"Querétaro Otomi"},"hi":{"name":"Hindi","dir":"ltr"},"fi":{"name":"Finnish","dir":"ltr"},"hu":{"dir":"ltr","name":"Hungarian"},"fa":{"name":"Persian","dir":"rtl"},"tr":{"dir":"ltr","name":"Turkish"},"el":{"dir":"ltr","name":"Greek"},"yue":{"dir":"ltr","name":"Cantonese (Traditional)"},"sm":{"name":"Samoan","dir":"ltr"},"bg":{"dir":"ltr","name":"Bulgarian"},"en":{"name":"English","dir":"ltr"},"nb":{"dir":"ltr","name":"Norwegian"},"es":{"name":"Spanish","dir":"ltr"},"pl":{"dir":"ltr","name":"Polish"},"ms":{"name":"Malay","dir":"ltr"},"id":{"name":"Indonesian","dir":"ltr"},"af":{"dir":"ltr","name":"Afrikaans"},"sr-Cyrl":{"dir":"ltr","name":"Serbian (Cyrillic)"},"mt":{"dir":"ltr","name":"Maltese"},"ty":{"dir":"ltr","name":"Tahitian"},"cs":{"dir":"ltr","name":"Czech"},"lv":{"dir":"ltr","name":"Latvian"},"it":{"dir":"ltr","name":"Italian"},"zh-Hans":{"dir":"ltr","name":"Chinese Simplified"},"th":{"name":"Thai","dir":"ltr"},"hr":{"dir":"ltr","name":"Croatian"},"nl":{"name":"Dutch","dir":"ltr"},"pt":{"name":"Portuguese","dir":"ltr"},"ur":{"name":"Urdu","dir":"rtl"},"ja":{"dir":"ltr","name":"Japanese"},"mww":{"dir":"ltr","name":"Hmong Daw"},"zh-Hant":{"name":"Chinese Traditional","dir":"ltr"},"et":{"dir":"ltr","name":"Estonian"},"da":{"dir":"ltr","name":"Danish"},"sl":{"name":"Slovenian","dir":"ltr"},"sw":{"name":"Kiswahili","dir":"ltr"},"sk":{"name":"Slovak","dir":"ltr"},"bs":{"name":"Bosnian","dir":"ltr"},"ro":{"name":"Romanian","dir":"ltr"},"cy":{"dir":"ltr","name":"Welsh"},"de":{"dir":"ltr","name":"German"},"uk":{"name":"Ukrainian","dir":"ltr"},"mg":{"dir":"ltr","name":"Malagasy"},"yua":{"dir":"ltr","name":"Yucatec Maya"},"vi":{"dir":"ltr","name":"Vietnamese"},"fr":{"name":"French","dir":"ltr"},"ko":{"name":"Korean","dir":"ltr"},"ca":{"name":"Catalan","dir":"ltr"}},"speech":{"ar-EG":{"name":"Arabic","language":"ar"},"zh-TW":{"language":"zh-Hant","name":"Chinese Traditional"},"ja-JP":{"language":"ja","name":"Japanese"},"ru-RU":{"name":"Russian","language":"ru"},"de-DE":{"language":"de","name":"German"},"en-US":{"name":"English","language":"en"},"zh-CN":{"language":"zh-Hans","name":"Chinese Simplified"},"es-ES":{"language":"es","name":"Spanish"},"fr-FR":{"language":"fr","name":"French"},"pt-BR":{"name":"Portuguese","language":"pt"},"it-IT":{"name":"Italian","language":"it"}}}';
     
+    ttslangs = ["ar-EG, Hoda (Female)","ar-SA, Naayf (Male)","ca-ES, HerenaRUS (Female)","cs-CZ, Vit (Male)","da-DK, HelleRUS (Female)","de-AT, Michael (Male)","de-CH, Karsten (Male)","de-DE, Hedda (Female)","de-DE, HeddaRUS (Female)","de-DE, Stefan, Apollo (Male)","el-GR, Stefanos (Male)","en-AU, Catherine (Female)","en-AU, HayleyRUS (Female)","en-CA, Linda (Female)","en-CA, HeatherRUS (Female)","en-GB, Susan, Apollo (Female)","en-GB, HazelRUS (Female)","en-GB, George, Apollo (Male)","en-IE, Shaun (Male)","en-IN, Heera, Apollo (Female)","en-IN, PriyaRUS (Female)","en-IN, Ravi, Apollo (Male)","en-US, ZiraRUS (Female)","en-US, JessaRUS (Female)","en-US, BenjaminRUS (Male)","es-ES, Laura, Apollo (Female)","es-ES, HelenaRUS (Female)","es-ES, Pablo, Apollo (Male)","es-MX, HildaRUS (Female)","es-MX, Raul, Apollo (Male)","fi-FI, HeidiRUS (Female)","fr-CA, Caroline (Female)","fr-CA, HarmonieRUS (Female)","fr-CH, Guillaume (Male)","fr-FR, Julie, Apollo (Female)","fr-FR, HortenseRUS (Female)","fr-FR, Paul, Apollo (Male)","he-IL, Asaf (Male)","hi-IN, Kalpana, Apollo (Female)","hi-IN, Kalpana (Female)","hi-IN, Hemant (Male)","hu-HU, Szabolcs (Male)","id-ID, Andika (Male)","it-IT, Cosimo, Apollo (Male)","ja-JP, Ayumi, Apollo (Female)","ja-JP, Ichiro, Apollo (Male)","ko-KR, HeamiRUS (Female)","nb-NO, HuldaRUS (Female)","nl-NL, HannaRUS (Female)","pl-PL, PaulinaRUS (Female)","pt-BR, HeloisaRUS (Female)","pt-BR, Daniel, Apollo (Male)","pt-PT, HeliaRUS (Female)","ro-RO, Andrei (Male)","ru-RU, Irina, Apollo (Female)","ru-RU, Pavel, Apollo (Male)","sk-SK, Filip (Male)","sv-SE, HedvigRUS (Female)","th-TH, Pattara (Male)","tr-TR, SedaRUS (Female)","zh-CN, HuihuiRUS (Female)","zh-CN, Yaoyao, Apollo (Female)","zh-CN, Kangkang, Apollo (Male)","zh-HK, Tracy, Apollo (Female)","zh-HK, TracyRUS (Female)","zh-HK, Danny, Apollo (Male)","zh-TW, Yating, Apollo (Female)","zh-TW, HanHanRUS (Female)","zh-TW, Zhiwei, Apollo (Male)"];
+
     langs = JSON.parse(data);
     $.each(langs['speech'], function(key, value) {
       if (value['language'] == languages['teacher']) {
@@ -81,11 +83,13 @@
       else {
         $('#teacher-lang').append('<option value="' + value['language'] + '">' + value['name'] + '</option>')
       }
-      if (value['language'] == languages['student-audio']) {
-        $('#student-audio-lang').append('<option value="' + value['language'] + '" selected="selected">' + value['name'] + '</option>')
+    });
+    $.each(ttslangs, function(key, value) {
+      if (value == languages['student-audio']) {
+        $('#student-audio-lang').append('<option value="' + value + '" selected="selected">' + value + '</option>')
       }
       else {
-        $('#student-audio-lang').append('<option value="' + value['language'] + '">' + value['name'] + '</option>')
+        $('#student-audio-lang').append('<option value="' + value + '">' + value + '</option>')
       }
     });
     $.each(langs['text'], function(key, value) {
