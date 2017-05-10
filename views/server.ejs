@@ -2,10 +2,14 @@
 <html>
   <head>
     <script src="https://simplewebrtc.com/latest-v2.js"></script> 
+    <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
     <video height="300" id="localVideo"></video>
     <div id="remotesVideos"></div>
+<button onclick="biology()">Biology</button>
+<button onclick="solar()">Solar System</button>
+
   </body>
   <script>
 var roomName = "<%- room %>";
@@ -28,5 +32,14 @@ webrtc.on('readyToCall', function () {
     webrtc.joinRoom(roomName);
 
 });
+var socket = io();
+function biology() {
+  socket.emit("biology");
+}
+
+function solar() {
+  socket.emit("solar");
+}
+
   </script>
 </html>

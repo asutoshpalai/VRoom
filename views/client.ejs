@@ -152,6 +152,29 @@
     });
 
 
+    socket.on("biology", function() {
+      addBiology();
+    })
+    
+    socket.on("solar", function() {
+      solarSystem();
+    })
+
+
+    function addBiology() {
+      document.getElementById("responsive").innerHTML = ("<a-entity position=\"-7 6 -10\" rotation = \"0 180 0\"   scale = \".007 .007 .007\" obj-model=\"obj: #dna-obj; mtl: #dna-mtl\"><a-animation attribute=\"rotation\" dur=\"5000\" fill=\"forwards\" to=\"360 360 0\" repeat=\"indefinite\"></a-animation></a-entity>");
+      setTimeout(function(){ 
+           document.getElementById("responsive").innerHTML = "";
+      sky.removeAttribute("src");}, 14000);
+    }
+
+    function solarSystem() {
+        document.getElementById("sky").setAttribute("src", "img.jpg")
+        sky.removeAttribute("color");
+        setTimeout(function(){ 
+          document.getElementById("sky").setAttribute("color", "#2980b9")
+          sky.removeAttribute("src");}, 9000);
+    }
 
     </script>
     <script src = "js/index.js"></script>

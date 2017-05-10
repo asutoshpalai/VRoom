@@ -53,14 +53,27 @@ var full_speech = [];
 var key_phrases = [];
 var key_lookup = {}; 
 
+function addBiology() {
+  document.getElementById("responsive").innerHTML = ("<a-entity position=\"-7 6 -10\" rotation = \"0 180 0\"   scale = \".007 .007 .007\" obj-model=\"obj: #dna-obj; mtl: #dna-mtl\"><a-animation attribute=\"rotation\" dur=\"5000\" fill=\"forwards\" to=\"360 360 0\" repeat=\"indefinite\"></a-animation></a-entity>");
+  setTimeout(function(){ 
+       document.getElementById("responsive").innerHTML = "";
+  sky.removeAttribute("src");}, 14000);
+}
+
+function solarSystem() {
+    document.getElementById("sky").setAttribute("src", "img.jpg")
+    sky.removeAttribute("color");
+    setTimeout(function(){ 
+      document.getElementById("sky").setAttribute("color", "#000")
+      sky.removeAttribute("src");}, 9000);
+}
+
+
 function handleSubs(recognition, translation) {
   document.getElementById("subs").setAttribute("text", "color: white; align: center; value: "+recognition);
   
   if(recognition.toLowerCase().indexOf("biology") >-1 ) {
-     document.getElementById("responsive").innerHTML = ("<a-entity position=\"-7 6 -10\" rotation = \"0 180 0\"   scale = \".007 .007 .007\" obj-model=\"obj: #dna-obj; mtl: #dna-mtl\"><a-animation attribute=\"rotation\" dur=\"5000\" fill=\"forwards\" to=\"360 360 0\" repeat=\"indefinite\"></a-animation></a-entity>");
-     setTimeout(function(){ 
-           document.getElementById("responsive").innerHTML = "";
-      sky.removeAttribute("src");}, 14000);
+    addBiology();
   }
   
   if(recognition.toLowerCase().indexOf("chemistry") >-1 ) {
@@ -68,11 +81,7 @@ function handleSubs(recognition, translation) {
   }
   
   if(recognition.toLowerCase().indexOf("solar") >-1 ) {
-    document.getElementById("sky").setAttribute("src", "img.jpg")
-    sky.removeAttribute("color");
-    setTimeout(function(){ 
-      document.getElementById("sky").setAttribute("color", "#000")
-      sky.removeAttribute("src");}, 9000);
+    solarSystem()
   }
 
 
