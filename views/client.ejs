@@ -148,7 +148,7 @@
       node.setAttribute("mixin", "avatar")
       node.setAttribute("position", data.position + " 1.4 0");
       document.getElementById("scene").appendChild(node)
-			$('.nicker').last().css('text', 'color: #2980b9; align: center; value: ' + <%- data.nick %> + '; width: 5;')
+			$('.nicker').last().css('text', 'color: #2980b9; align: center; value: ' + data.nick + '; width: 5;')
     });
 
     socket.on("position", function(positions) {
