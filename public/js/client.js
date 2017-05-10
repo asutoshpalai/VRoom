@@ -209,6 +209,7 @@ function TTS(text) {
     var url = URL.createObjectURL(blob);
 
     var audio = new Audio(url);
+    audio.onended = function () { URL.revokeObjectURL(url); };
     audio.play()
   };
 
