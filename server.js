@@ -95,9 +95,21 @@ var io = require('socket.io')(httpsServer);
 
 var people = {};
 var positions = 0;
-io.on('connection', function(socket)
-{
+io.on('connection', function(socket) {
 	socket.emit("id", socket.id);
+  console.log(socket.handshake.headers.referer.split('/'));
+  if (socket.handshake.headers.referer.split('/')[socket.handshake.headers.referer.split('/').length - 1] == "lecture") {    console.log("socket from server.html");
+    
+  socket.on("biology", function() {
+    socket.broadcast.emit('biology');
+  })
+
+  socket.on("solar", function() {
+    socket.broadcast.emit('solar');
+  })
+  
+    return;
+  }
 	console.log(socket.id);
 	for (var person in people) {
 		socket.emit("add", people[person]);
