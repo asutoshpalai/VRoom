@@ -136,7 +136,7 @@ function extractKeyPhrases(string) {
     }
 
     key_phrases = key_phrases.concat(new_phrases);
-    document.getElementById("tags").setAttribute("text", "color: white; align: center; value: "+getInLine(key_phrases));
+    document.getElementById("tags").setAttribute("text", "color: #2980b9; align: center; value: "+getInLine(key_phrases));
 
 
     console.log(key_phrases);
@@ -170,7 +170,7 @@ function search_result(string) {
     console.log("search:");
     console.log(key_lookup);
     key_lookup[string] = data.webPages.value[0].snippet;
-    document.getElementById("scrapedData").setAttribute("text", "color: white; align: center; value: "+data.webPages.value[0].snippet);
+    document.getElementById("scrapedData").setAttribute("text", "color: #2980b9; align: center; value: "+data.webPages.value[0].snippet);
 
   })
   .fail(function() {
