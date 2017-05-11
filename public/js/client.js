@@ -71,7 +71,7 @@ function solarSystem() {
 
 function handleSubs(recognition, translation) {
   TTS(translation, $('#audio-lang').html());
-  document.getElementById("subs").setAttribute("text", "color: white; align: center; value: "+recognition);
+  document.getElementById("subs").setAttribute("text", "color: #2980b9; align: center; value: "+recognition);
   
   if(recognition.toLowerCase().indexOf("biology") >-1 ) {
     addBiology();
