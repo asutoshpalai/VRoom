@@ -33,7 +33,7 @@ app.use(
   sassMiddleware({
     src: __dirname + '/scss',
     dest: __dirname + '/public/css',
-    debug: true,
+    debug: false,
     prefix:  '/css'
   })
 );
@@ -77,15 +77,28 @@ app.get("/token", function(req, response) {
 
 app.post("/lecture", function(req, response) {
   rooms_languages[req.body.room] = req.body.lang;
-  response.render('server.ejs', {
-    room: req.body.room
+
+  const gallery_folder = './public/gallery';
+  fs.readdir(gallery_folder, (err, files) => {
+    response.render('server.ejs', {
+      room: req.body.room,
+      images: files
+    });
   });
+
 });
 
 app.get("/languages", getLanguages);
 
 app.get("/privacy-policy", function(req, response) {
   response.render('privacy_policy.ejs');
+});
+
+app.get("/gallery", function(req, response) {
+  const gallery_folder = './public/gallery';
+  fs.readdir(gallery_folder, (err, files) => {
+    response.json(files);
+  })
 })
 
 var httpsServer = https.createServer(serverConfig, app);
@@ -108,6 +121,12 @@ io.on('connection', function(socket) {
     socket.broadcast.emit('solar');
   })
   
+  socket.on('slidechange', function(data) {
+    // console.log("fgie6wyfiuwalehifuwaejgfiewangiluewahgiluwahlugweahli");
+    // console.log(data);
+    socket.broadcast.emit('slidechange', data);
+  })
+
     return;
   }
 	console.log(socket.id);
