@@ -21,8 +21,14 @@ for naional level code.fun.do SHOWCASE.
 - Listing down keywords.
 - Presentation of meanings of keywords from the speech.
 
-### Technology used
+### Technologies used
 
 - [A-Frame](https://aframe.io/) for web VR.
 - [Microsoft Cognitive Services](https://azure.microsoft.com/en-in/services/cognitive-services/)
   for live translation, captioning, keyword extraction, online reference.
+
+## LICENCE
+
+All the code in this repo is presented under GNU GPLv2 licence. You
+can find the licence text in the [LICENCE](https://github.com/asutoshpalai/VRoom/blob/master/LICENSE)
+file.
