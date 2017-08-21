@@ -27,8 +27,8 @@ for naional level code.fun.do SHOWCASE.
 - [Microsoft Cognitive Services](https://azure.microsoft.com/en-in/services/cognitive-services/)
   for live translation, captioning, keyword extraction, online reference.
 
-## LICENCE
+## LICENSE
 
-All the code in this repo is presented under GNU GPLv2 licence. You
-can find the licence text in the [LICENCE](https://github.com/asutoshpalai/VRoom/blob/master/LICENSE)
+All the code in this repo is presented under GNU GPLv2 license. You
+can find the licence text in the [LICENSE](https://github.com/asutoshpalai/VRoom/blob/master/LICENSE)
 file.
